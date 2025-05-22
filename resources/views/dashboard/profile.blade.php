@@ -71,7 +71,7 @@
 
 </style>
 
-
+@auth
 <div class="profile-container">
     <h1>Data Diri</h1>
     <div class="profile-card">
@@ -115,5 +115,5 @@
     </div>
 </div>
 
-
+@endauth
 @endsection
