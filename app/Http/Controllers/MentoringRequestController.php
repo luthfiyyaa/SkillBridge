@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MentoringRequest;
 use Illuminate\Http\Request;
+use App\Models\Mentor;
+use App\Models\MentoringRequest;
+use App\Models\Jadwal; // jika ada model jadwal
+use Illuminate\Support\Facades\Auth;
 
 class MentoringRequestController extends Controller
 {
@@ -13,23 +16,34 @@ class MentoringRequestController extends Controller
         return view('mentoring.request', compact('mentor'));
     }
 
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
-        $mentor = Mentor::findOrFail($id);
-
-        $validated = $request->validate([
-            'nama_pemohon' => 'required|string|max:255',
+        $request->validate([
+            'mentor_id' => 'required|exists:mentors,id',
+            'nama_pemohon' => 'required|string|max:100',
             'email' => 'required|email',
-            'pesan' => 'nullable|string',
+            'pesan' => 'required|string|max:255',
+            'tanggal' => 'required|date'
         ]);
 
+        // Simpan ke tabel mentoring_requests
         MentoringRequest::create([
-            'mentor_id' => $mentor->id,
-            'nama_pemohon' => $validated['nama_pemohon'],
-            'email' => $validated['email'],
-            'pesan' => $validated['pesan'],
+            'mentor_id' => $request->mentor_id,
+            'nama_pemohon' => $request->nama_pemohon,
+            'email' => $request->email,
+            'pesan' => $request->pesan,
         ]);
 
-        return redirect()->route('mentoring.request', $mentor->id)->with('success', 'Pengajuan mentoring berhasil dikirim.');
+        // Simpan ke tabel jadwal
+        Jadwal::create([
+            'tanggal' => $request->tanggal, // Gunakan sekarang jika belum ada input tanggal
+            'topik' => $request->pesan,
+            'status' => 'menunggu',
+            'mentor_id' => $request->mentor_id,
+            'kontak' => 'contoh' 
+        ]);
+
+        return redirect()->route('jadwal.index')->with('success', 'Permintaan berhasil dikirim!');
     }
+
 }

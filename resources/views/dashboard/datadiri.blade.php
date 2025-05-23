@@ -87,7 +87,7 @@
   <div class="form-container">
     <div class="form-title">Lengkapi Data Diri</div>
 
-    <form action="{{ url('/datadiri') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ url('/profil') }}" method="POST" enctype="multipart/form-data">
       @csrf
       <div class="form-group">
         <label for="nama">Nama Lengkap</label>

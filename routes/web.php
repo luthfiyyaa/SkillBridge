@@ -5,6 +5,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\MentoringController;
 use App\Http\Controllers\MentoringRequestController;
+use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\RiwayatController;
+use App\Http\Controllers\CategoryTestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
@@ -33,6 +36,8 @@ Route::get('/mentor', [MentorController::class, 'index'])->name('mentor.index');
 Route::get('/mentors/{id}', [MentorController::class, 'show'])->name('mentor.show');
 
 Route::get('/mentoring/request/{id}', [MentoringController::class, 'request'])->name('mentoring.request');
+Route::post('/mentoring/store', [MentoringRequestController::class, 'store'])->name('mentoring.store');
+
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -48,8 +53,17 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/mentor/{id}/request', [MentoringRequestController::class, 'create'])->name('mentoring.request');
-Route::post('/mentor/{id}/request', [MentoringRequestController::class, 'store'])->name('mentoring.request.store');
+Route::post('/mentoring/store', [MentoringRequestController::class, 'store'])->name('mentoring.store');
 
+
+Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
+Route::post('/jadwal/action', [JadwalController::class, 'handleAction'])->name('jadwal.action');
+
+Route::get('/review-mentoring', [RiwayatController::class, 'index'])->name('review.index');
+Route::post('/review-mentoring', [RiwayatController::class, 'store'])->name('review.store');
+
+Route::get('/category-test', [CategoryTestController::class, 'index'])->name('tests.index'); 
+Route::get('/detail-test/{id}', [CategoryTestController::class, 'show'])->name('tests.show');
 // Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 // Route::resource('/forum', ForumController::class)->middleware('auth');
 // Route::resource('/mentoring', MentoringController::class)->middleware('auth');

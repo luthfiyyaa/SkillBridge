@@ -115,12 +115,16 @@
 <div class="menu" id="menu">
   <button class="menu-button" onclick="toggleSubmenu(this)">Tes Kesiapan Karir</button>
   <div class="submenu">
-    <button class="menu-button" onclick="location.href='tes-karir.html'">Tes</button>
+    <button class="menu-button" onclick="location.href='{{ route('tests.index')}}'">Kategori Tes</button>
+    <button class="menu-button" onclick="location.href='{{ route('mentor.index')}}'">Rekomendasi Kursus</button>
+    <button class="menu-button" onclick="location.href='{{ route('mentor.index')}}'">Hasil Tes</button>
   </div>
 
   <button class="menu-button" onclick="toggleSubmenu(this)">Mentoring</button>
   <div class="submenu">
-    <button class="menu-button" onclick="location.href='mentoring.html'">Form Mentoring</button>
+    <button class="menu-button" onclick="location.href='{{ route('mentor.index')}}'">Daftar Mentor</button>
+    <button class="menu-button" onclick="location.href='{{ route('jadwal.index')}}'">Jadwal Mentoring</button>
+    <button class="menu-button" onclick="location.href='{{ route('review.index')}}'">Riwayat Mentoring</button>
   </div>
 
   <button class="menu-button" onclick="toggleSubmenu(this)">Komunitas</button>
