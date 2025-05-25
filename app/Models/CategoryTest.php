@@ -12,4 +12,11 @@ class CategoryTest extends Model
     'bidang', 
     'image', 
     'description'];
+
+    // app/Models/Test.php
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
 }

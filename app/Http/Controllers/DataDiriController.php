@@ -3,6 +3,7 @@
 // app/Http/Controllers/DataDiriController.php
 namespace App\Http\Controllers;
 use App\Models\DataDiri;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class DataDiriController extends Controller
@@ -14,7 +15,7 @@ class DataDiriController extends Controller
 
     public function submitForm(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'nama' => 'required',
             'username' => 'required',
             'email' => 'required|email',
@@ -26,26 +27,37 @@ class DataDiriController extends Controller
             'foto' => 'nullable|image|max:2048',
         ]);
 
-        if ($request->hasFile('foto')) {
-            $data['foto'] = $request->file('foto')->store('foto-profil', 'public');
-        }
+        // if ($request->hasFile('foto')) {
+        //     ['foto'] = $request->file('foto')->store('foto-profil', 'public');
+        // }
 
-        $data['user_id'] = auth()->id();
-
-        DataDiri::create($data);
+        DataDiri::create([
+            'user_id' => Auth::id(),
+            'nama' => $request->nama,
+            'username' => $request->username,
+            'email' => $request->email,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'no_hp' => $request->no_hp,
+            'institusi' => $request->institusi,
+            'bidang_minat' => $request->bidang_minat,
+            'foto' => $request->foto,
+        ]);
 
         return redirect()->route('profil')->with('success', 'Data berhasil disimpan!');
     }
 
     public function showProfile()
     {
-        $data = DataDiri::where('user_id', auth()->id())->first();
+        $profil = DataDiri::where('user_id', auth()->id())->first();
 
-        if (!$data) {
+        if (!$profil) {
             return redirect()->route('datadiri.create')->with('warning', 'Silakan isi data diri terlebih dahulu.');
         }
 
-        return view('dashboard.profile', compact('data'));
+        return view('dashboard.profile', compact('profil'));
     }
+
+
 
 }

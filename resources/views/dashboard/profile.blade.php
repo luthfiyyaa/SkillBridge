@@ -75,41 +75,41 @@
 <div class="profile-container">
     <h1>Data Diri</h1>
     <div class="profile-card">
-        <div class="profile-image">
-            <img src="{{ asset('storage/' . $data->foto) }}" alt="Foto Profil">
-        </div>
+        {{-- <div class="profile-image">
+            <img src="{{ asset('storage/' . $profil->foto) }}" alt="Foto Profil">
+        </div> --}}
         <div class="profile-details">
             <div class="detail-row">
                 <span>Nama Lengkap</span>
-                <strong>{{ $data->nama }}</strong>
+                <strong>{{ $profil->nama }}</strong>
             </div>
             <div class="detail-row">
                 <span>Username</span>
-                <strong>{{ $data->username }}</strong>
+                <strong>{{ $profil->username }}</strong>
             </div>
             <div class="detail-row">
                 <span>Email</span>
-                <strong>{{ $data->email }}</strong>
+                <strong>{{ $profil->email }}</strong>
             </div>
             <div class="detail-row">
                 <span>Jenis Kelamin</span>
-                <strong>{{ $data->jenis_kelamin }}</strong>
+                <strong>{{ $profil->jenis_kelamin }}</strong>
             </div>
             <div class="detail-row">
                 <span>Tanggal Lahir</span>
-                <strong>{{ $data->tanggal_lahir }}</strong>
+                <strong>{{ $profil->tanggal_lahir }}</strong>
             </div>
             <div class="detail-row">
                 <span>Nomor HP</span>
-                <strong>{{ $data->no_hp }}</strong>
+                <strong>{{ $profil->no_hp }}</strong>
             </div>
             <div class="detail-row">
                 <span>Institusi</span>
-                <strong>{{ $data->institusi }}</strong>
+                <strong>{{ $profil->institusi }}</strong>
             </div>
             <div class="detail-row">
                 <span>Bidang Minat</span>
-                <strong>{{ $data->bidang_minat }}</strong>
+                <strong>{{ $profil->bidang_minat }}</strong>
             </div>
         </div>
     </div>
