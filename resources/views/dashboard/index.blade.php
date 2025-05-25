@@ -173,24 +173,25 @@
         color: #3b82f6;
     }
 
-    .footer {
-        background-color: #1e3a8a;
-        color: white;
-        padding: 40px 20px;
-        text-align: center;
-    }
-
 </style>
 
 
 <div class="hero">
     <h1>Selamat Datang!</h1>
+    @auth
+    <p>Selamat datang, {{ Auth::user()->name }}</p>
+    @endauth
+
     <h2>Jembatan Antara Keterampilan dan Karir</h2>
     <div class="hero-buttons">
         <button onclick="window.scrollBy({ top: 500, behavior: 'smooth' });" class="btn btn-primary">
             Mulai eksplorasi
         </button>
+        @guest
+            <p>Silakan login terlebih dahulu.</p>
             <a href="{{ route('login') }}" class="btn btn-outline-light">Login</a>
+        @endguest
+            
     </div>
 </div>
 
@@ -229,16 +230,18 @@
         @php
             $features = [
                 'Tes Kesiapan Karir' => [
-                    ['label' => 'Kategori Test', 'route' => 'tests.index'],
-                    // ['label' => 'Tes Kepribadian', 'route' => 'tests.personality'],
+                    ['label' => 'Daftar Test', 'route' => 'tests.index'],
+                    ['label' => 'Hasil Tes', 'route' => 'test.result'],
+                    ['label' => 'Riwayat Tes', 'route' => 'test.history'],
                 ],
                 'Mentoring' => [
                     ['label' => 'Daftar Mentor', 'route' => 'mentor.index'],
+                    ['label' => 'Jadwal Mentoring', 'route' => 'jadwal.index'],
                     ['label' => 'Riwayat Mentoring', 'route' => 'review.index'],
                 ],
                 'Forum Komunitas' => [
-                    // ['label' => 'Topik Diskusi', 'route' => 'forum.index'],
-                    // ['label' => 'Buat Postingan', 'route' => 'forum.create'],
+                    ['label' => 'Forum', 'route' => 'forum'],
+                    ['label' => 'Buat Postingan', 'route' => 'forum.create'],
                 ],
                 'Rekomendasi Pekerjaan' => [
                     // ['label' => 'Lowongan Terkini', 'route' => 'jobs.latest'],
@@ -283,11 +286,6 @@
         </div>
     </div>
 </section>
-
-<footer class="footer">
-    <p>&copy; {{ date('Y') }} SkillBridge. All rights reserved.</p>
-    <p>Hubungi kami: info@skillbridge.com | Instagram: @skillbridge.id</p>
-</footer>
 
 
 <script>

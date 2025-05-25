@@ -100,7 +100,25 @@
     <a href="{{ route('home') }}"><img src="{{ asset('build/assets/home.png') }}" alt="Home"></a>
     {{-- <a href="{{ route('notifikasi') }}"> --}}
         <img src="{{ asset('build/assets/notif.png') }}" alt="notifikasi"></a>
-    <a href="{{ route('profil') }}"><img src="{{ asset('build/assets/manusia.png') }}" alt="Profil"></a>
+    
+
+    {{-- Jika sudah login, tampilkan nama dan profil --}}
+    @auth
+    <a href="{{ route('profil') }}" style="display: flex; align-items: center; gap: 8px;">
+        <img src="{{ asset('build/assets/manusia.png') }}" alt="Profil">
+        <span style="color: white; font-weight: bold;">
+            {{ Auth::user()->name ?? Auth::user()->username }}
+        </span>
+    </a>
+    @endauth
+
+    {{-- Jika belum login, tampilkan tombol login --}}
+    @guest
+    <a href="{{ route('login') }}" style="display: flex; align-items: center; gap: 8px;">
+        <img src="{{ asset('build/assets/manusia.png') }}" alt="Login">
+        <span style="color: white; font-weight: bold;">Login</span>
+    </a>
+    @endguest
   </div>
 
   {{-- ini bikin hamburgernya --}}
@@ -114,7 +132,7 @@
 <div class="menu" id="menu">
   <button class="menu-button" onclick="toggleSubmenu(this)">Tes Kesiapan Karir</button>
   <div class="submenu">
-    <button class="menu-button" onclick="location.href='{{ route('tests.index')}}'">Kategori Tes</button>
+    <button class="menu-button" onclick="location.href='{{ route('tests.index')}}'">Daftar Tes</button>
     <button class="menu-button" onclick="location.href='{{ route('test.result')}}'">Hasil Tes</button>
         <button class="menu-button" onclick="location.href='{{ route('test.history')}}'">Riwayat Tes</button>
   </div>
@@ -126,14 +144,10 @@
     <button class="menu-button" onclick="location.href='{{ route('review.index')}}'">Riwayat Mentoring</button>
   </div>
 
-  <button class="menu-button" onclick="toggleSubmenu(this)">Komunitas</button>
+  <button class="menu-button" onclick="toggleSubmenu(this)">Forum Komunitas</button>
   <div class="submenu">
-    <button class="menu-button" onclick="location.href='komunitas.html'">Komunitas</button>
-    <button class="menu-button" onclick="location.href='forum.html'">Forum</button>
-    <button class="menu-button" onclick="location.href='buat-postingan.html'">Buat Postingan</button>
-    <button class="menu-button" onclick="location.href='notifikasi.html'">Notifikasi</button>
-    <button class="menu-button" onclick="location.href='moderasi.html'">Moderasi</button>
-    <button class="menu-button" onclick="location.href='banding.html'">Banding</button>
+    <button class="menu-button" onclick="location.href='{{ route('forum')}}'">Forum</button>
+    <button class="menu-button" onclick="location.href='{{ route('forum.create')}}'">Buat Postingan</button>
   </div>
 
   <button class="menu-button" onclick="toggleSubmenu(this)">Rekomendasi Pekerjaan</button>
@@ -145,6 +159,14 @@
   <div class="submenu">
     <button class="menu-button" onclick="location.href='portofolio.html'">Portofolio</button>
   </div>
+
+    {{-- Tombol logout jika sudah login --}}
+  @auth
+  <form method="POST" action="{{ route('logout') }}">
+    @csrf
+    <button class="menu-button">Logout</button>
+  </form>
+  @endauth
 </div>
 
 <script>

@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserAnswer;
 use App\Models\Question;
-use App\Models\CategoryTest;
+use App\Models\Test;
 use App\Models\TestResult;
 use Illuminate\Support\Facades\DB;
-
-
 
 class TestController extends Controller
 {
@@ -18,7 +16,7 @@ class TestController extends Controller
         $testId = $request->query('test_id');
         $questionNumber = $request->query('q', 1);
 
-        $test = CategoryTest::findOrFail($testId);
+        $test = Test::findOrFail($testId);
         $questions = Question::where('test_id', $testId)->get();
 
         $currentQuestion = $questions->slice($questionNumber - 1, 1)->first();
@@ -52,7 +50,7 @@ class TestController extends Controller
             return redirect()->route('test.result', ['test_id' => $request->test_id]);
         }
 
-        return redirect()->route('test.soal', [
+        return redirect()->route('test.question', [
             'test_id' => $request->test_id,
             'q' => $nextQuestion
         ]);
@@ -63,7 +61,7 @@ class TestController extends Controller
         $testId = $request->query('test_id');
         $questionNumber = (int) $request->query('number', 1);
 
-        $test = CategoryTest::findOrFail($testId);
+        $test = Test::findOrFail($testId);
         $questions = $test->questions()->get();
         $totalQuestions = $questions->count();
 
@@ -71,16 +69,28 @@ class TestController extends Controller
             return redirect()->back()->with('error', 'Nomor soal tidak valid.');
         }
 
-        $currentQuestion = $questions[$questionNumber - 1]; // index mulai dari 0
+        $currentQuestion = $questions[$questionNumber - 1];
 
-        return view('soal-test', compact(
-            'test', 
-            'testId', 
-            'currentQuestion', 
-            'questionNumber', 
-            'totalQuestions'
+        $existingAnswer = UserAnswer::where('user_id', auth()->id())
+            ->where('question_id', $currentQuestion->id)
+            ->first();
+
+        $answeredQuestions = UserAnswer::where('user_id', auth()->id())
+            ->where('test_id', $testId)
+            ->pluck('question_id')
+            ->toArray();
+
+        return view('test.soal-test', compact(
+            'test',
+            'testId',
+            'currentQuestion',
+            'questionNumber',
+            'totalQuestions',
+            'existingAnswer',
+            'answeredQuestions'
         ));
     }
+
 
     // app/Http/Controllers/TestController.php
     public function showResult()
@@ -99,7 +109,7 @@ class TestController extends Controller
 
     public function submitTest(Request $request)
     {
-        $userId = auth()->user();
+        $userId = auth()->id();
         $testId = $request->input('test_id');
 
         $answers = UserAnswer::where('user_id', $userId)
@@ -110,9 +120,13 @@ class TestController extends Controller
 
         foreach ($answers as $answer) {
             $question = Question::find($answer->question_id);
-            if ($question && $question->correct_answer === $answer->selected_answer) {
+            if (
+                $question &&
+                trim(strtolower($question->correct_answer)) === trim(strtolower($answer->selected_answer))) 
+                {
                 $correct++;
             }
+
         }
 
         $total = $answers->count();

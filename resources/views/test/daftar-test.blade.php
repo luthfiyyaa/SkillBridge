@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Kategori Tes')
+@section('title', 'Daftar Tes')
 
 @section('content')
 <style>
@@ -44,7 +44,7 @@
     }
 </style>
 
-<h1>Kategori Tes</h1>
+<h1>Daftar Tes</h1>
 
 <form method="GET" action="{{ route('tests.index') }}" class="filter-bar">
     <input 

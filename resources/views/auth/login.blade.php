@@ -99,7 +99,7 @@
                 <label for="remember">Remember Me</label>
             </div>
 
-            <button type="submit"><a href="/datadiri"></a>Log In</button>
+            <button type="submit">Log In</button>
 
             <div class="extra-links">
                 <a href="{{ route('password.request') }}">Lupa Password</a> |

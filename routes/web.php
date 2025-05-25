@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DataDiriController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\MentoringController;
 use App\Http\Controllers\MentoringRequestController;
@@ -29,8 +30,10 @@ Route::get('/register', [RegisteredUserController::class, 'create'])
 Route::post('/register', [RegisteredUserController::class, 'store'])
             ->middleware('guest');
 
-Route::get('/login', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'create'])->name('login');
-Route::post('/login', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'store']);
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/datadiri', [DataDiriController::class, 'showForm'])->name('datadiri.create');
@@ -70,7 +73,7 @@ Route::post('/jadwal/action', [JadwalController::class, 'handleAction'])->name('
 Route::get('/review-mentoring', [RiwayatController::class, 'index'])->name('review.index');
 Route::post('/review-mentoring', [RiwayatController::class, 'store'])->name('review.store');
 
-Route::get('/category-test', [CategoryTestController::class, 'index'])->name('tests.index'); 
+Route::get('/daftar-test', [CategoryTestController::class, 'index'])->name('tests.index'); 
 Route::get('/detail-test/{id}', [CategoryTestController::class, 'show'])->name('tests.show');
 
 Route::get('/soal-test', [TestController::class, 'showTestForm'])->name('test.soal');
@@ -79,6 +82,7 @@ Route::get('/soal-test', [TestController::class, 'showQuestion'])->name('test.qu
 Route::post('/save-answer', [TestController::class, 'saveAnswer'])->name('test.save');
 Route::get('/hasil-test', [TestController::class, 'showResult'])->name('test.result');
 Route::get('/riwayat-test', [TestController::class, 'history'])->name('test.history');
+Route::post('/submit-test', [TestController::class, 'submitTest'])->name('test.submit');
 
 Route::get('/forum', [ForumController::class, 'index'])->name('forum');
 Route::get('/buat-post', [ForumController::class, 'create'])->name('forum.create');

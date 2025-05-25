@@ -14,7 +14,7 @@ class Question extends Model
 
     public function test()
     {
-        return $this->belongsTo(CategoryTest::class);
+        return $this->belongsTo(Test::class);
     }
 }
 

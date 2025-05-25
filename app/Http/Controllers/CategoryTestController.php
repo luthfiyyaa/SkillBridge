@@ -18,7 +18,7 @@ class CategoryTestController extends Controller
         $tests = $query->get(); 
         $bidangs = CategoryTest::select('bidang')->distinct()->pluck('bidang'); 
         
-        return view('test.category-test', compact('tests', 'bidangs')); 
+        return view('test.daftar-test', compact('tests', 'bidangs')); 
     } 
     
     public function show($id) 

@@ -91,6 +91,34 @@
     .overview-button:hover {
         background-color: #bbdefb;
     }
+
+    .nav-button {
+        padding: 8px 16px;
+        background-color: #f0f0f0;
+        color: #333;
+        text-decoration: none;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        transition: background-color 0.2s;
+    }
+
+    .nav-button:hover {
+        background-color: #e0e0e0;
+    }
+
+    .submit-button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .submit-button:hover {
+        background-color: #218838;
+    }
 </style>
 
 @section('content')
@@ -109,25 +137,60 @@
 
             <p><strong>{{ $questionNumber }}. {{ $currentQuestion->question_text }}</strong></p>
 
-            @foreach(['a', 'b', 'c', 'd'] as $opt)
-                <label>
-                    <input type="radio" name="selected_answer" value="{{ $opt }}" required>
-                    {{ $currentQuestion->{'option_' . $opt} }}
-                </label>
-            @endforeach
+            @php
+                $options = [
+                'a' => $currentQuestion->option_a,
+                'b' => $currentQuestion->option_b,
+                'c' => $currentQuestion->option_c,
+                'd' => $currentQuestion->option_d,
+                ];
+                
+            $userAnswer = \App\Models\UserAnswer::where('user_id', auth()->id())
+                ->where('question_id', $currentQuestion->id)
+                ->first();
+            @endphp
 
-            <button type="submit" class="btn btn-primary">Jawab & Lanjut</button>
+            @php
+                $existingAnswer = \App\Models\UserAnswer::where('user_id', auth()->id())
+                    ->where('question_id', $currentQuestion->id)
+                    ->first();
+                $selected = $existingAnswer->selected_answer ?? null;
+            @endphp
+
+            @if ($currentQuestion->option_a)
+                <label><input type="radio" name="selected_answer" value="a" {{ $selected === 'a' ? 'checked' : '' }} required> A. {{ $currentQuestion->option_a }}</label>
+            @endif
+            @if ($currentQuestion->option_b)
+                <label><input type="radio" name="selected_answer" value="b" {{ $selected === 'b' ? 'checked' : '' }} required> B. {{ $currentQuestion->option_b }}</label>
+            @endif
+            @if ($currentQuestion->option_c)
+                <label><input type="radio" name="selected_answer" value="c" {{ $selected === 'c' ? 'checked' : '' }} required> C. {{ $currentQuestion->option_c }}</label>
+            @endif
+            @if ($currentQuestion->option_d)
+                <label><input type="radio" name="selected_answer" value="d" {{ $selected === 'd' ? 'checked' : '' }} required> D. {{ $currentQuestion->option_d }}</label>
+            @endif
+
+
+            <button type="submit" class="btn-primary">Simpan Jawaban</button>
         </form>
 
-        <div style="margin-top: 20px;">
-            @if ($questionNumber > 1)
-                <a href="{{ route('test.question', ['test_id' => $testId, 'number' => $questionNumber - 1]) }}" class="btn btn-secondary">Previous</a>
+        <div style="margin-top: 20px; display: flex; gap: 10px;"> 
+            @if ($questionNumber > 1) 
+                <a href="{{ route('test.question', ['test_id' => $testId, 'number' => $questionNumber - 1]) }}" 
+                    class="nav-button">Previous</a> 
             @endif
 
             @if ($questionNumber < $totalQuestions)
-                <a href="{{ route('test.question', ['test_id' => $testId, 'number' => $questionNumber + 1]) }}" class="btn btn-secondary">Next</a>
+                <a href="{{ route('test.question', ['test_id' => $testId, 'number' => $questionNumber + 1]) }}"
+                class="nav-button">Next</a>
+            @else
+                <form method="POST" action="{{ route('test.submit') }}"> 
+                    @csrf 
+                    <input type="hidden" name="test_id" value="{{ $testId }}"> 
+                    <button type="submit" class="btn-primary" style="background-color: #dc3545;">Finish</button> 
+                </form>
             @endif
-        </div>
+</div>
 
     </div>
 
@@ -135,13 +198,18 @@
     <div class="overview-section">
         <h3>Soal</h3>
         @for ($i = 1; $i <= $totalQuestions; $i++)
+            @php
+                $questionId = $test->questions[$i - 1]->id;
+                $isAnswered = in_array($questionId, $answeredQuestions ?? []);
+            @endphp
             <a 
                 href="{{ route('test.question', ['test_id' => $testId, 'number' => $i]) }}" 
-                class="overview-button {{ $i == $questionNumber ? 'active' : '' }}"
+                class="overview-button {{ $i == $questionNumber ? 'active' : '' }} {{ $isAnswered ? 'bg-success text-white' : '' }}"
             >
                 Soal {{ $i }}
             </a>
         @endfor
+
     </div>
 </div>
 

@@ -13,10 +13,5 @@ class CategoryTest extends Model
     'image', 
     'description'];
 
-    // app/Models/Test.php
-    public function questions()
-    {
-        return $this->hasMany(Question::class);
-    }
 
 }

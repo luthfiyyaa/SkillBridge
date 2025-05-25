@@ -12,76 +12,78 @@
 
     .history-title {
         text-align: center;
-        font-size: 2rem;
+        font-size: 2.5rem;
         font-weight: bold;
         color: #2c3e50;
-        margin-bottom: 30px;
+        margin-bottom: 40px;
     }
 
     .test-card {
         display: flex;
-        align-items: center;
         justify-content: space-between;
-        background-color: #bcd0ff;
-        border-radius: 16px;
-        padding: 20px;
+        align-items: center;
+        background-color: #ffffff;
+        padding: 20px 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
         margin-bottom: 20px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
+    }
+
+    .test-card:hover {
+        transform: translateY(-2px);
     }
 
     .test-info {
         display: flex;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .test-thumbnail {
-        width: 60px;
-        height: 60px;
-        background-color: #fff;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        color: #333;
-    }
-
-    .test-text {
-        display: flex;
         flex-direction: column;
-        font-size: 16px;
-        color: #333;
+    }
+
+    .test-info h4 {
+        margin: 0;
+        font-size: 20px;
+        color: #2c3e50;
+    }
+
+    .test-info small {
+        color: #666;
+        margin-top: 4px;
     }
 
     .test-score {
-        background-color: #2c3e50;
+        background-color: #1976d2;
         color: white;
-        padding: 12px 24px;
-        border-radius: 12px;
+        padding: 10px 20px;
+        border-radius: 8px;
         font-weight: bold;
+        font-size: 18px;
+        min-width: 80px;
+        text-align: center;
+    }
+
+    .empty-message {
+        text-align: center;
+        color: #888;
+        margin-top: 60px;
         font-size: 18px;
     }
 </style>
 
 <div class="history-container">
-    <h2 class="text-center my-4">Riwayat Tes</h2>
+    <h2 class="history-title">Riwayat Tes</h2>
 
     <div class="container">
         @forelse ($results as $result)
-            <div class="card mb-3 p-3 d-flex flex-row justify-content-between align-items-center">
-                <div>
-                    <strong>{{ $result->test->title }}</strong><br>
-                    <small>Tanggal: {{ $result->created_at->format('d M Y H:i') }}</small>
+            <div class="test-card">
+                <div class="test-info">
+                    <h4>{{ $result->test->title }}</h4>
+                    <small>Dikerjakan pada {{ $result->created_at->format('d M Y, H:i') }}</small>
                 </div>
-                <div>
-                    <span class="btn btn-primary">{{ $result->score }}</span>
-                </div>
+                <div class="test-score">{{ $result->score }}</div>
             </div>
         @empty
-            <p class="text-muted text-center">Belum ada tes yang dikerjakan.</p>
+            <p class="empty-message">Belum ada tes yang dikerjakan.</p>
         @endforelse
     </div>
-
 </div>
 @endsection
