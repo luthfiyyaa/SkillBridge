@@ -11,7 +11,7 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: #EDF2FA;
+      background: #EFEFEF;
     }
 
     .container {
@@ -19,12 +19,12 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: #EDF2FA;
+      background: #EFEFEF;
     }
 
     .form-box {
       width: 450px;
-      background: #CCDBFD;
+      background: #ffffff;
       border-radius: 20px;
       box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.2);
       padding: 40px 30px;
@@ -32,7 +32,7 @@
 
     .form-box h1 {
       text-align: center;
-      color: #425CB8;
+      color: #274c77;
       font-size: 36px;
       margin-bottom: 30px;
       text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -57,6 +57,7 @@
       border: none;
       border-radius: 8px;
       margin-bottom: 15px;
+      background-color: #b1d6ef;
     }
 
     .note {
@@ -68,7 +69,7 @@
 
     button {
       height: 45px;
-      background: #425CB8;
+      background: #6096ba;
       color: white;
       font-size: 16px;
       border: none;
@@ -76,10 +77,11 @@
       cursor: pointer;
       transition: background 0.3s ease;
       margin-top: 10px;
+      width: 50%;
     }
 
     button:hover {
-      background: #2f449b;
+      background: #274c77;
     }
 
     .back-to-login {
@@ -98,32 +100,32 @@
     @extends('layouts.app')
 
     @section('content')
-  <div class="container">
-    <div class="form-box">
-      <h1>Register Now!</h1>
-     <form method="POST" action="{{ route('register') }}" onsubmit="return validateForm()">
-      @csrf
-        <label for="name">Nama Lengkap</label>
-        <input type="text" id="name" name="name" required>
+    <div class="container">
+      <div class="form-box">
+        <h1>Register Now!</h1>
+      <form method="POST" action="{{ route('register') }}" onsubmit="return validateForm()">
+        @csrf
+          <label for="name">Nama Lengkap</label>
+          <input type="text" id="name" name="name" required>
 
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
 
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required minlength="8">
-        <div class="note">Minimal 8 karakter</div>
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required minlength="8">
+          <div class="note">Minimal 8 karakter</div>
 
-        <label for="password_confirmation">Konfirmasi Password</label>
-        <input type="password" id="password_confirmation" name="password_confirmation" required>
+          <label for="password_confirmation">Konfirmasi Password</label>
+          <input type="password" id="password_confirmation" name="password_confirmation" required>
 
-        <button type="submit">Daftar Sekarang</button>
-      </form>
+          <button type="submit">Daftar Sekarang</button>
+        </form>
 
-      <div class="back-to-login">
-        <a href="/login">Kembali ke Login</a>
+        <div class="back-to-login">
+          <a href="/login">Kembali ke Login</a>
+        </div>
       </div>
     </div>
-  </div>
   @endsection
 
   <script>

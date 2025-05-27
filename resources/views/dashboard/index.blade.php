@@ -34,8 +34,8 @@
     }
 
     .scroll-target {
-        margin-top: 40px;
-        margin-bottom: 60px;
+        margin-top: 20px;
+        margin-bottom: 110px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -52,7 +52,7 @@
     }
 
     .feature-box {
-        background-color: #eef2ff;
+        background-color: #6096ba;
         padding: 20px;
         border-radius: 16px;
         width: 240px;
@@ -61,11 +61,12 @@
         transition: all 0.3s ease;
         cursor: pointer;
         position: relative;
+        color: #ffffff;
     }
 
     .feature-box:hover {
         transform: translateY(-4px);
-        background-color: #dce4ff;
+        background-color: #79b3d9;
     }
 
     .feature-box strong {
@@ -89,7 +90,7 @@
         position: absolute;
         top: 100%;
         left: 0;
-        width: 100%;
+        width: 90%;
         background-color: white;
         border-radius: 10px;
         box-shadow: 0 8px 16px rgba(0,0,0,0.15);
@@ -119,7 +120,7 @@
     }
 
     .dropdown-content a:hover {
-        color: #3b82f6;
+        color: #6096ba;
     }
 
     section {
@@ -127,31 +128,50 @@
         text-align: center;
     }
 
-    /* .section-light { background-color: #ffffff; }
-    .section-white { background-color: #ffffff; }*/
     
     .section-blue { 
         background-color: #ffffff; 
-        max-width: 500px;
+        padding: 60px 20px;
+    }
+
+    .stat-wrapper {
+        max-width: 1000px;
+        margin: 0 auto;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 20px;
-        margin-top: 30px;
-        margin-bottom: 20px;
-        border-radius: 50px;
-    } 
+        gap: 40px;
+        text-align: center;
+    }
+
+    .stat-item {
+        font-size: 36px;
+        color: #3b82f6;
+        font-weight: bold;
+    }
+
+    .stat-box {
+        min-width: 200px;
+    }
+
 
     .section-title {
-        font-size: 28px;
-        margin-bottom: 20px;
+        font-size: 35px;
+        margin-bottom: 30px;
+        margin-top: 0;
         font-weight: bold;
+        color: #274c77;
     }
 
     .section-content {
         max-width: 800px;
         margin: 0 auto;
         font-size: 16px;
+    }
+
+    .section-white { 
+        background-color: #ffffff; 
+        padding: 60px 20px;
     }
 
     .info-cards {
@@ -222,21 +242,22 @@
 <!-- STATISTIK -->
 <section class="section-blue">
     <h2 class="section-title">Statistik SkillBridge</h2>
-    <div class="info-cards">
-        <div>
+    <div class="stat-wrapper">
+        <div class="stat-box">
             <div class="stat-item">1,200+</div>
             <p>Mahasiswa Terdaftar</p>
         </div>
-        <div>
+        <div class="stat-box">
             <div class="stat-item">150+</div>
             <p>Mentor Profesional</p>
         </div>
-        <div>
+        <div class="stat-box">
             <div class="stat-item">300+</div>
             <p>Rekomendasi Pekerjaan</p>
         </div>
     </div>
 </section>
+
 
 <!-- FITUR UNGGULAN -->
 <div id="features" class="scroll-target">
@@ -258,8 +279,14 @@
                     ['label' => 'Forum', 'route' => 'forum'],
                     ['label' => 'Buat Postingan', 'route' => 'forum.create'],
                 ],
-                'Rekomendasi Pekerjaan' => [],
-                'Portofolio Digital' => [],
+                'Rekomendasi' => [
+                    ['label' => 'Rekomendasi Lowongan', 'route' => 'rekom.lowongan'],
+                    ['label' => 'Riwayat Lamaran', 'route' => 'lamaran.index'],
+                ],
+                'Portofolio' => [
+                    ['label' => 'Edit Portofolio', 'route' => 'porto.edit'],
+                    ['label' => 'Portofolio Kamu', 'route' => 'porto.show'],
+                ],
             ];
         @endphp
 

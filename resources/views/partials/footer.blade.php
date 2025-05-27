@@ -2,7 +2,7 @@
     .footer {
         text-align: center;
         padding: 20px 0;
-        background-color: #1e3a8a;
+        background-color: #274c77;
         color: #ffffff;
         font-size: 14px;
         margin-top: 40px;

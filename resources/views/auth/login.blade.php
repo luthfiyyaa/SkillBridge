@@ -14,7 +14,7 @@
         .login-card {
             width: 544px;
             height: 500px;
-            background: #CCDBFD;
+            background: #ffffff;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             border-radius: 28px;
             padding: 30px;
@@ -24,7 +24,7 @@
 
         .login-title {
             text-align: center;
-            color: #425CB8;
+            color: #274c77;
             font-size: 50px;
             font-weight: 700;
             margin-bottom: 40px;
@@ -39,13 +39,14 @@
 
         .login-form input[type="email"],
         .login-form input[type="password"] {
-            width: 100%;
+            width: 90%;
             height: 40px;
             margin-bottom: 25px;
             padding: 10px 15px;
             border-radius: 8px;
             border: none;
             font-size: 20px;
+            background-color: #99c0da;
         }
 
         .remember-me {
@@ -59,7 +60,7 @@
         .login-form button {
             width: 174px;
             height: 52px;
-            background: #425CB8;
+            background: #6096ba;
             border: none;
             border-radius: 13px;
             color: white;
