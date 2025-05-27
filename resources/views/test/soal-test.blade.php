@@ -4,7 +4,7 @@
 
 <style>
     #soal-test-page {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Poppins', sans-serif;
         background-color: #f9fbfc;
         padding: 30px;
         display: flex;

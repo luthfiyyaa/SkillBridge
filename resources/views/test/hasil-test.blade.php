@@ -5,7 +5,7 @@
 @section('content')
 <style>
     #result-page {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Poppins', sans-serif;
         background-color: #f3f6fb;
         padding: 30px;
         margin-top: 80px; /* beri jarak dari navbar */

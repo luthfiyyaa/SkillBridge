@@ -4,7 +4,7 @@
 
 <style>
     #detail-test-page {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Poppins', sans-serif;
         background-color: #eef3f9;
         padding: 30px;
     }

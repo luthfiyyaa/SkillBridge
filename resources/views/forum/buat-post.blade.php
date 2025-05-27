@@ -2,23 +2,71 @@
 
 @section('content')
 <style>
+    body {
+        background-color: #f3f8ff;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        max-width: 700px;
+        margin: 30px auto;
+        padding: 20px;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+    }
+
     .form-box {
         background-color: #cfe0ff;
         padding: 2rem;
         border-radius: 1rem;
-        margin: 0 auto;
-        width: 80%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        width: 500px;
+    }
+
+    .form-box input[type="text"],
+    .form-box textarea {
+        width: 100%;
+        max-width: 600px;
+        padding: 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+    }
+
+    button[type="submit"] {
+        margin-top: 1.5rem;
+        background-color: #2563eb;
+        color: white;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #1d4ed8;
     }
 </style>
-<div class="container text-center">
-    <h1 class="text-3xl font-bold mb-4">Buat Postingan</h1>
+
+<div class="container">
+    <h1>Buat Postingan</h1>
     <form method="POST" action="{{ route('forum.store') }}">
         @csrf
         <div class="form-box">
-            <input type="text" name="title" placeholder="Masukkan Judul" class="w-full p-2 rounded mb-2">
-            <textarea name="content" placeholder="Isi Konten" class="w-full p-2 rounded" rows="5"></textarea>
+            <input type="text" name="title" placeholder="Masukkan Judul" required>
+            <textarea name="content" placeholder="Isi Konten" rows="5" required></textarea>
         </div>
-        <button type="submit" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded">kirim Postingan</button>
+        <button type="submit">Kirim Postingan</button>
     </form>
 </div>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\ForumPost;
+use App\Models\Komentar;
 
 class ForumController extends Controller
 {
@@ -49,6 +50,23 @@ class ForumController extends Controller
     public function show($id)
     {
         $post = ForumPost::findOrFail($id);
-        return view('forum.show', compact('post'));
+        $komentar = Komentar::where('post_id', $id)->latest()->get();
+
+        return view('forum.show', compact('post', 'komentar'));
     }
+
+    public function kirimKomentar(Request $request, $id)
+    {
+        $request->validate([
+            'isi' => 'required|string',
+        ]);
+
+        Komentar::create([
+            'post_id' => $id,
+            'isi' => $request->isi,
+        ]);
+
+        return redirect()->route('forum.show', $id)->with('success', 'Komentar berhasil dikirim.');
+    }
+
 }

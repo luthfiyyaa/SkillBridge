@@ -6,6 +6,7 @@
         color: #ffffff;
         font-size: 14px;
         margin-top: 40px;
+        font-family: 'Poppins', sans-serif;
     }
 </style>
 

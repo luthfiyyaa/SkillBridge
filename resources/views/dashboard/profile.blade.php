@@ -4,7 +4,7 @@
 <style>
     body {
         background: #EDF2FA;
-        font-family: Inter, sans-serif;
+        font-family: 'Poppins', sans-serif;
     }
     .header {
         width: 100%;

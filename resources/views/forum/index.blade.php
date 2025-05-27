@@ -4,7 +4,7 @@
 <style>
     body {
         background: linear-gradient(to bottom, #E8EBF4, #ffffff);
-        font-family: sans-serif;
+        font-family: 'Poppins', sans-serif;
         margin: 0;
         padding: 0;
     }
@@ -117,7 +117,6 @@
                 <div class="post-summary">{{ Str::limit($post->summary, 100) }}</div>
                 <div class="post-date">{{ $post->created_at->format('d/m/y') }}</div>
                 <div class="icons">
-                    <i class="fa-regular fa-heart"></i>
                     <i class="fa-regular fa-comment"></i>
                 </div>
             </a>

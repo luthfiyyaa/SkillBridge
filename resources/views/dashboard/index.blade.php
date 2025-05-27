@@ -11,7 +11,6 @@
         padding: 100px 20px;
         text-align: center;
         color: white;
-        position: relative;
         min-height: 500px;
         display: flex;
         flex-direction: column;
@@ -19,7 +18,7 @@
         align-items: center;
     }
 
-    .hero h1{
+    .hero h1 {
         font-size: 100px;
     }
 
@@ -32,7 +31,8 @@
     }
 
     .scroll-target {
-        margin-top: 60px;
+        margin-top: 40px;
+        margin-bottom: 60px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -43,9 +43,9 @@
         display: flex;
         flex-wrap: nowrap;
         justify-content: space-between;
+        font-weight: 200;
         gap: 24px;
-        max-width: 1200px;
-        position: relative;
+        max-width: 1500px;
     }
 
     .feature-box {
@@ -54,10 +54,10 @@
         border-radius: 16px;
         width: 240px;
         text-align: left;
-        position: relative;
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
         transition: all 0.3s ease;
         cursor: pointer;
+        position: relative;
     }
 
     .feature-box:hover {
@@ -100,8 +100,8 @@
 
     .dropdown-content ul {
         list-style: none;
-        margin: 0;
         padding: 0;
+        margin: 0;
     }
 
     .dropdown-content li {
@@ -124,17 +124,9 @@
         text-align: center;
     }
 
-    .section-light {
-        background-color: #f5f8ff;
-    }
-
-    .section-white {
-        background-color: #ffffff;
-    }
-
-    .section-blue {
-        background-color: #f0f4ff;
-    }
+    .section-light { background-color: #f5f8ff; }
+    .section-white { background-color: #ffffff; }
+    .section-blue { background-color: #f0f4ff; }
 
     .section-title {
         font-size: 28px;
@@ -150,10 +142,11 @@
 
     .info-cards {
         display: flex;
-        justify-content: center;
         flex-wrap: wrap;
+        justify-content: center;
         gap: 20px;
         margin-top: 30px;
+        margin-bottom: 20px;
     }
 
     .info-card {
@@ -172,16 +165,14 @@
         font-size: 36px;
         color: #3b82f6;
     }
-
 </style>
 
-
+<!-- HERO SECTION -->
 <div class="hero">
     <h1>Selamat Datang!</h1>
     @auth
-    <p>Selamat datang, {{ Auth::user()->name }}</p>
+        <p>Selamat datang, {{ Auth::user()->name }}</p>
     @endauth
-
     <h2>Jembatan Antara Keterampilan dan Karir</h2>
     <div class="hero-buttons">
         <button onclick="window.scrollBy({ top: 500, behavior: 'smooth' });" class="btn btn-primary">
@@ -191,20 +182,30 @@
             <p>Silakan login terlebih dahulu.</p>
             <a href="{{ route('login') }}" class="btn btn-outline-light">Login</a>
         @endguest
-            
     </div>
 </div>
 
+<!-- TENTANG KAMI -->
 <section class="section-light">
     <h2 class="section-title">Apa itu SkillBridge?</h2>
-    <p class="section-content">SkillBridge adalah platform pengembangan karir yang menjembatani mahasiswa dengan mentor, tes kesiapan karir, dan rekomendasi pekerjaan sesuai kompetensi. Kami hadir untuk mendukung mahasiswa dalam merancang masa depan yang lebih terarah.</p>
+    <p class="section-content">
+        SkillBridge adalah platform pengembangan karir yang menjembatani mahasiswa dengan mentor, tes kesiapan karir, 
+        dan rekomendasi pekerjaan sesuai kompetensi. Kami hadir untuk mendukung mahasiswa dalam merancang masa depan yang lebih terarah.
+    </p>
     <div class="info-cards">
-        <div class="info-card">🎯 <strong>Tujuan</strong><br>Membantu mahasiswa merencanakan dan mempersiapkan karier impian mereka.</div>
-        <div class="info-card">👥 <strong>Siapa yang menggunakan?</strong><br>Mahasiswa, mentor profesional, dan pengelola karir kampus.</div>
-        <div class="info-card">💡 <strong>Kenapa mahasiswa harus pakai?</strong><br>Akses langsung ke bimbingan karir, fitur tes kesiapan, dan koneksi dunia kerja.</div>
+        <div class="info-card">
+            🎯 <strong>Tujuan</strong><br>Membantu mahasiswa merencanakan dan mempersiapkan karier impian mereka.
+        </div>
+        <div class="info-card">
+            👥 <strong>Siapa yang menggunakan?</strong><br>Mahasiswa, mentor profesional, dan pengelola karir kampus.
+        </div>
+        <div class="info-card">
+            💡 <strong>Kenapa mahasiswa harus pakai?</strong><br>Akses langsung ke bimbingan karir, fitur tes kesiapan, dan koneksi dunia kerja.
+        </div>
     </div>
 </section>
 
+<!-- STATISTIK -->
 <section class="section-blue">
     <h2 class="section-title">Statistik SkillBridge</h2>
     <div class="info-cards">
@@ -223,7 +224,7 @@
     </div>
 </section>
 
-
+<!-- FITUR UNGGULAN -->
 <div id="features" class="scroll-target">
     <h2 class="section-title">Program Unggulan</h2>
     <div class="features">
@@ -243,32 +244,29 @@
                     ['label' => 'Forum', 'route' => 'forum'],
                     ['label' => 'Buat Postingan', 'route' => 'forum.create'],
                 ],
-                'Rekomendasi Pekerjaan' => [
-                    // ['label' => 'Lowongan Terkini', 'route' => 'jobs.latest'],
-                    // ['label' => 'Sesuai Skill', 'route' => 'jobs.match'],
-                ],
-                'Portofolio Digital' => [
-                    // ['label' => 'Upload Portofolio', 'route' => 'portfolio.upload'],
-                    // ['label' => 'Lihat Portofolio', 'route' => 'portfolio.view'],
-                ],
+                'Rekomendasi Pekerjaan' => [],
+                'Portofolio Digital' => [],
             ];
         @endphp
 
         @foreach($features as $title => $subItems)
             <div class="feature-box" onclick="toggleDropdown(this)">
                 <strong>{{ $title }}</strong>
-                <div class="dropdown-content">
-                    <ul>
-                        @foreach($subItems as $item)
-                            <li><a href="{{ route($item['route']) }}">{{ $item['label'] }}</a></li>
-                        @endforeach
-                    </ul>
-                </div>
+                @if(count($subItems) > 0)
+                    <div class="dropdown-content">
+                        <ul>
+                            @foreach($subItems as $item)
+                                <li><a href="{{ route($item['route']) }}">{{ $item['label'] }}</a></li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
         @endforeach
     </div>
 </div>
 
+<!-- TESTIMONI -->
 <section class="section-white">
     <h2 class="section-title">Testimoni Pengguna</h2>
     <div class="info-cards">
@@ -286,7 +284,6 @@
         </div>
     </div>
 </section>
-
 
 <script>
     function toggleDropdown(clickedBox) {

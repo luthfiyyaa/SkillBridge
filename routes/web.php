@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\DataDiriController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LowonganController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\MentoringController;
@@ -87,7 +87,13 @@ Route::post('/submit-test', [TestController::class, 'submitTest'])->name('test.s
 Route::get('/forum', [ForumController::class, 'index'])->name('forum');
 Route::get('/buat-post', [ForumController::class, 'create'])->name('forum.create');
 Route::post('/buat-post', [ForumController::class, 'store'])->name('forum.store');
+
 Route::get('/postingan/{id}', [ForumController::class, 'show'])->name('forum.show');
+Route::post('/postingan/{id}', [ForumController::class, 'kirimKomentar'])->name('forum.kirimKomentar');
+
+Route::get('/rekom-lowongan', [LowonganController::class, 'index'])->name('rekom.lowongan');
+Route::get('/detail-lowongan/{id}', [LowonganController::class, 'show'])->name('detail.lowongan');
+
 
 
 // Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
