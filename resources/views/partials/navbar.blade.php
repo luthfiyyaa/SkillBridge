@@ -8,16 +8,16 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background-color: #f4f9ff;
+      background-color: #EFEFEF;
     }
 
     .navbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background-color: #ABC4FF; /* Warna biru tua */
+      background-color: white; 
       padding: 10px 20px;
-      color: white;
+      color: #0C6AC1;
     }
 
     .navbar-left {
@@ -27,13 +27,13 @@
     }
 
     .navbar-left img {
-      width: 35px;
+      width: 20px;
       height: auto;
       cursor: pointer;
     }
 
     .logo img{
-        width:80px;
+        width:55px;
         height: auto;
     }
 
@@ -45,8 +45,8 @@
     }
 
     .hamburger div {
-      width: 30px;
-      height: 5px;
+      width: 25px;
+      height: 3px;
       background-color: #0C6AC1;
     }
 
@@ -56,7 +56,7 @@
         top: 60px; /* Biar di bawah navbar */
         right: 0;
         width: 250px;
-        background-color: #e6f0ff;
+        background-color: #ffffff;
         padding: 20px;
         box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.2);
         border-radius: 10px 0 0 10px;
@@ -66,8 +66,8 @@
 
 
     .menu-button {
-      background-color: white;
-      color: #0C6AC1;
+      background-color: #a3cef1;
+      color: #274c77;
       font-weight: bold;
       border: none;
       margin: 8px 0;
@@ -86,6 +86,19 @@
     .menu-button.active + .submenu {
       display: flex;
       flex-direction: column;
+    }
+
+    .menu-logout {
+      background-color: #c10c1b;
+      color: #ffffff;
+      font-weight: bold;
+      border: none;
+      margin: 8px 0;
+      padding: 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
     }
   </style>
 </head>
@@ -106,7 +119,7 @@
     @auth
     <a href="{{ route('profil') }}" style="display: flex; align-items: center; gap: 8px;">
         <img src="{{ asset('build/assets/manusia.png') }}" alt="Profil">
-        <span style="color: white; font-weight: bold;">
+        <span style="color: #0C6AC1; font-weight: bold;">
             {{ Auth::user()->name ?? Auth::user()->username }}
         </span>
     </a>
@@ -116,7 +129,7 @@
     @guest
     <a href="{{ route('login') }}" style="display: flex; align-items: center; gap: 8px;">
         <img src="{{ asset('build/assets/manusia.png') }}" alt="Login">
-        <span style="color: white; font-weight: bold;">Login</span>
+        <span style="color: #0C6AC1; font-weight: bold;">Login</span>
     </a>
     @endguest
   </div>
@@ -150,21 +163,23 @@
     <button class="menu-button" onclick="location.href='{{ route('forum.create')}}'">Buat Postingan</button>
   </div>
 
-  <button class="menu-button" onclick="toggleSubmenu(this)">Rekomendasi Pekerjaan</button>
+  <button class="menu-button" onclick="toggleSubmenu(this)">Rekomendasi</button>
   <div class="submenu">
-    <button class="menu-button" onclick="location.href='rekomendasi.html'">Rekomendasi</button>
+    <button class="menu-button" onclick="location.href='{{ route('rekom.lowongan')}}'">Rekomendasi Pekerjaan</button>
+    <button class="menu-button" onclick="location.href='{{ route('lamaran.index')}}'">Riwayat Lowongan</button>
   </div>
 
   <button class="menu-button" onclick="toggleSubmenu(this)">Portofolio</button>
   <div class="submenu">
-    <button class="menu-button" onclick="location.href='portofolio.html'">Portofolio</button>
+    <button class="menu-button" onclick="location.href='{{ route('porto.edit')}}'">Edit Portofolio</button>
+    <button class="menu-button" onclick="location.href='{{ route('porto.show')}}'">Portofolio Kamu</button>
   </div>
 
     {{-- Tombol logout jika sudah login --}}
   @auth
   <form method="POST" action="{{ route('logout') }}">
     @csrf
-    <button class="menu-button">Logout</button>
+    <button class="menu-logout">Logout</button>
   </form>
   @endauth
 </div>

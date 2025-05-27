@@ -11,6 +11,8 @@ use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\CategoryTestController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\PortofolioController;
+use App\Http\Controllers\LamaranController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
@@ -93,6 +95,13 @@ Route::post('/postingan/{id}', [ForumController::class, 'kirimKomentar'])->name(
 
 Route::get('/rekom-lowongan', [LowonganController::class, 'index'])->name('rekom.lowongan');
 Route::get('/detail-lowongan/{id}', [LowonganController::class, 'show'])->name('detail.lowongan');
+Route::get('/apply-lamaran/{id}', [LamaranController::class, 'create'])->name('lamaran.create');
+Route::post('/apply-lamaran', [LamaranController::class, 'store'])->name('lamaran.store');
+Route::get('/riwayat-lamaran', [LamaranController::class, 'index'])->name('lamaran.index');
+
+Route::get('/edit-porto', [PortofolioController::class, 'edit'])->name('porto.edit');
+Route::post('/edit-porto', [PortofolioController::class, 'update'])->name('porto.update');
+Route::get('/portofolio', [PortofolioController::class, 'show'])->name('porto.show');
 
 
 

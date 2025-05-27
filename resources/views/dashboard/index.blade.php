@@ -22,12 +22,15 @@
         font-size: 100px;
     }
 
-    .hero-buttons .btn {
+    .hero button, .hero a {
         padding: 10px 20px;
         font-weight: bold;
+        font-size: large;
         border-radius: 8px;
-        background-color: #425CB8;
-        color: white;
+        background-color: #a3cef1;
+        color: #274c77;
+        text-decoration: none;
+        border: 0;
     }
 
     .scroll-target {
@@ -124,9 +127,20 @@
         text-align: center;
     }
 
-    .section-light { background-color: #f5f8ff; }
-    .section-white { background-color: #ffffff; }
-    .section-blue { background-color: #f0f4ff; }
+    /* .section-light { background-color: #ffffff; }
+    .section-white { background-color: #ffffff; }*/
+    
+    .section-blue { 
+        background-color: #ffffff; 
+        max-width: 500px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        border-radius: 50px;
+    } 
 
     .section-title {
         font-size: 28px;
@@ -171,16 +185,16 @@
 <div class="hero">
     <h1>Selamat Datang!</h1>
     @auth
-        <p>Selamat datang, {{ Auth::user()->name }}</p>
+        <p>Halo!, {{ Auth::user()->name }}</p>
     @endauth
     <h2>Jembatan Antara Keterampilan dan Karir</h2>
     <div class="hero-buttons">
-        <button onclick="window.scrollBy({ top: 500, behavior: 'smooth' });" class="btn btn-primary">
+        <button onclick="window.scrollBy({ top: 500, behavior: 'smooth' });">
             Mulai eksplorasi
         </button>
         @guest
             <p>Silakan login terlebih dahulu.</p>
-            <a href="{{ route('login') }}" class="btn btn-outline-light">Login</a>
+            <a href="{{ route('login') }}">Login</a>
         @endguest
     </div>
 </div>

@@ -129,7 +129,7 @@
         <h3>Kualifikasi</h3>
         <p>{!! nl2br(e($lowongan->kualifikasi)) !!}</p>
 
-        <a class="apply-btn" href="#">Lamar Sekarang</a>
+        <a class="apply-btn" href="{{ route('lamaran.create', ['id' => $lowongan->id]) }}">Lamar Sekarang</a>
     </div>
 
 
