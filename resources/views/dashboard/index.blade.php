@@ -267,7 +267,6 @@
             $features = [
                 'Tes Kesiapan Karir' => [
                     ['label' => 'Daftar Test', 'route' => 'tests.index'],
-                    ['label' => 'Hasil Tes', 'route' => 'test.result'],
                     ['label' => 'Riwayat Tes', 'route' => 'test.history'],
                 ],
                 'Mentoring' => [

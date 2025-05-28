@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Jadwal;
 use App\Models\RiwayatMentoring;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Notifikasi;
 
 class RiwayatController extends Controller
 {
@@ -29,6 +31,12 @@ class RiwayatController extends Controller
         'rating' => $request->rating,
         'komentar' => $request->komentar
     ]);
+
+    Notifikasi::create([
+            'user_id' => Auth::id(),
+            'judul' => 'Umpan Balik Tersimpan',
+            'pesan' => 'Umpan balik berhasil dikirim.',
+        ]);
 
     return redirect()->route('review.index')->with('success', 'Umpan balik berhasil dikirim!');
 }

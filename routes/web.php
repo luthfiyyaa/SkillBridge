@@ -13,6 +13,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\PortofolioController;
 use App\Http\Controllers\LamaranController;
+use App\Http\Controllers\NotifikasiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
@@ -103,7 +104,10 @@ Route::get('/edit-porto', [PortofolioController::class, 'edit'])->name('porto.ed
 Route::post('/edit-porto', [PortofolioController::class, 'update'])->name('porto.update');
 Route::get('/portofolio', [PortofolioController::class, 'show'])->name('porto.show');
 
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');
+    Route::post('/notifikasi/{id}/baca', [NotifikasiController::class, 'tandaiSudahDibaca'])->name('notifikasi.baca');
+});
 
 // Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 // Route::resource('/forum', ForumController::class)->middleware('auth');

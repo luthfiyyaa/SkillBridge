@@ -3,7 +3,7 @@
 @section('content')
     <style>
         body {
-            background: linear-gradient(to bottom, #eaf4ff, #ffffff);
+            background: #efefef;
             margin: 0;
             padding: 0;
         }
@@ -25,7 +25,7 @@
 
         .header h1 {
             font-size: 36px;
-            color: #003459;
+            color: #274c77;
             text-shadow: 2px 2px #ccdff6;
         }
 
@@ -50,7 +50,7 @@
         }
 
         .info i {
-            color: #007EA7;
+            color: #6096ba;
         }
 
         .tags {
@@ -60,7 +60,7 @@
         }
 
         .tag {
-            background-color: #4b67d1;
+            background-color: #6096ba;
             color: white;
             padding: 8px 20px;
             border-radius: 20px;
@@ -71,7 +71,7 @@
         h3 {
             margin-top: 30px;
             margin-bottom: 10px;
-            color: #003459;
+            color: #274c77;
         }
 
         ul {
@@ -82,7 +82,7 @@
         .apply-btn {
             display: inline-block;
             margin-top: 30px;
-            background-color: #4b67d1;
+            background-color: #6096ba;
             color: white;
             font-weight: bold;
             padding: 12px 25px;
@@ -97,7 +97,7 @@
 
         .back a {
             text-decoration: none;
-            color: #007EA7;
+            color: #6096ba;
             font-size: 14px;
         }
 

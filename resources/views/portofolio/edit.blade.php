@@ -3,32 +3,41 @@
 @section('content')
 <style>
     body {
-        background-color: #f3f4f6;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #efefef;
     }
     .edit-container {
         background-color: #ffffff;
         border-radius: 20px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        padding: 40px;
+        padding: 60px;
+        padding-bottom: 90px;
         max-width: 900px;
         margin: 30px auto;
+        height: fit-content;
     }
     .edit-title {
         text-align: center;
         font-size: 2rem;
         font-weight: 700;
         margin-bottom: 30px;
-        color: #2c3e50;
+        color: #274c77;
     }
     .edit-form input[type="text"],
     .edit-form input[type="email"],
     .edit-form input[type="url"],
-    .edit-form textarea,
     .edit-form input[type="file"] {
-        width: 100%;
+        width: 95%;
+        align-content: center;
         padding: 12px;
-        border: 1px solid #ccc;
+        border: 1px solid #6096ba;
+        border-radius: 10px;
+        font-size: 1rem;
+    }
+    .edit-form textarea {
+        width: 97%;
+        align-content: center;
+        padding: 12px;
+        border: 1px solid #6096ba;
         border-radius: 10px;
         font-size: 1rem;
     }
@@ -49,7 +58,7 @@
         padding: 15px;
     }
     .submit-btn {
-        background-color: #1a1a5e;
+        background-color: #6096ba;
         color: white;
         padding: 12px 25px;
         border: none;
@@ -59,7 +68,7 @@
         float: right;
     }
     .submit-btn:hover {
-        background-color: #111144;
+        background-color: #406b87;
     }
 </style>
 

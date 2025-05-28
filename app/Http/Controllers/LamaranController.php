@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Lamaran;
 use App\Models\Lowongan;
 use App\Models\Portofolio;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Notifikasi;
 use Illuminate\Http\Request;
 
 class LamaranController extends Controller
@@ -72,6 +74,12 @@ class LamaranController extends Controller
         'file_portofolio' => $filePath,
         'lowongan_id' => $request->lowongan_id,
         'status' => 'Proses'
+    ]);
+
+    Notifikasi::create([
+        'user_id' => Auth::id(),
+        'judul' => 'Lamaran Tersimpan',
+        'pesan' => 'Lamaran berhasil dikirim.',
     ]);
 
     return redirect('/riwayat-lamaran')->with('success', 'Lamaran berhasil dikirim.');

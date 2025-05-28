@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Portofolio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Notifikasi;
 
 class PortofolioController extends Controller
 {
@@ -80,6 +82,12 @@ class PortofolioController extends Controller
         }
 
         $porto->save();
+
+        Notifikasi::create([
+            'user_id' => Auth::id(),
+            'judul' => 'Portofolio Tersimpan',
+            'pesan' => 'Portofolio kamu berhasil disimpan.',
+        ]);
 
         return redirect('/portofolio')->with('success', 'Portofolio berhasil diperbarui!');
     }

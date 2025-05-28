@@ -57,7 +57,7 @@
       border: none;
       border-radius: 8px;
       margin-bottom: 15px;
-      background-color: #b1d6ef;
+      border: 2px solid #99c0da;
     }
 
     .note {
@@ -77,7 +77,7 @@
       cursor: pointer;
       transition: background 0.3s ease;
       margin-top: 10px;
-      width: 50%;
+      width: 100%;
     }
 
     button:hover {

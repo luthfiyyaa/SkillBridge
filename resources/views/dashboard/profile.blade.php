@@ -3,22 +3,23 @@
 
 <style>
     body {
-        background: #EDF2FA;
+        background: #efefef;
         font-family: 'Poppins', sans-serif;
     }
     .header {
         width: 100%;
         height: 117px;
-        background: #ABC4FF;
+        background: #ffffff;
         box-shadow: 0px 4px 250px rgba(0, 0, 0, 0.25);
         position: relative;
     }
 
     .profile-container {
         max-width: 900px;
+        height: 550px;
         margin: 40px auto;
         padding: 20px;
-        background-color: #e6ecf5;
+        background-color: #ffffff;
         border-radius: 20px;
         font-family: 'Segoe UI', sans-serif;
     }
@@ -26,7 +27,7 @@
     .profile-container h1 {
         text-align: center;
         font-size: 36px;
-        color: #3b5edb;
+        color: #274c77;
         margin-bottom: 30px;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
     }
@@ -75,9 +76,9 @@
 <div class="profile-container">
     <h1>Data Diri</h1>
     <div class="profile-card">
-        {{-- <div class="profile-image">
+        <div class="profile-image">
             <img src="{{ asset('storage/' . $profil->foto) }}" alt="Foto Profil">
-        </div> --}}
+        </div>
         <div class="profile-details">
             <div class="detail-row">
                 <span>Nama Lengkap</span>

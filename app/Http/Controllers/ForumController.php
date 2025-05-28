@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\ForumPost;
 use App\Models\Komentar;
+use App\Models\Notifikasi;
 
 class ForumController extends Controller
 {
@@ -44,6 +45,12 @@ class ForumController extends Controller
             'field' => $request->field,
         ]);
 
+        Notifikasi::create([
+            'user_id' => Auth::id(),
+            'judul' => 'Postingan Terkirim',
+            'pesan' => 'Postingan kamu berhasil dibuat.',
+        ]);
+
         return redirect()->route('forum')->with('success', 'Postingan berhasil dibuat');
     }
 
@@ -64,6 +71,12 @@ class ForumController extends Controller
         Komentar::create([
             'post_id' => $id,
             'isi' => $request->isi,
+        ]);
+
+        Notifikasi::create([
+            'user_id' => Auth::id(),
+            'judul' => 'Komentar Tersimpan',
+            'pesan' => 'Komentar kamu berhasil dikirim.',
         ]);
 
         return redirect()->route('forum.show', $id)->with('success', 'Komentar berhasil dikirim.');

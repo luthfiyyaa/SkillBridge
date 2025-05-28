@@ -6,7 +6,7 @@
 <style>
     .history-container {
         padding: 40px;
-        background: linear-gradient(to bottom right, #e3eefe, #f3f8ff);
+        background: #efefef;
         min-height: 100vh;
     }
 
@@ -14,7 +14,7 @@
         text-align: center;
         font-size: 2.5rem;
         font-weight: bold;
-        color: #2c3e50;
+        color: #274c77;
         margin-bottom: 40px;
     }
 
@@ -51,7 +51,7 @@
     }
 
     .test-score {
-        background-color: #1976d2;
+        background-color: #6096ba;
         color: white;
         padding: 10px 20px;
         border-radius: 8px;

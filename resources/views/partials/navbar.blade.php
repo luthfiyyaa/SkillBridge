@@ -111,8 +111,30 @@
     </div>
     
     <a href="{{ route('home') }}"><img src="{{ asset('build/assets/home.png') }}" alt="Home"></a>
-    {{-- <a href="{{ route('notifikasi') }}"> --}}
-        <img src="{{ asset('build/assets/notif.png') }}" alt="notifikasi"></a>
+
+    @php
+        $jumlahBelumDibaca = \App\Models\Notifikasi::where('user_id', Auth::id())->where('is_read', false)->count();
+    @endphp
+
+    <div style="position: relative;">
+      <a href="{{ route('notifikasi.index') }}">
+          <img src="{{ asset('build/assets/notif.png') }}" alt="notifikasi">
+      </a>
+      @if($jumlahBelumDibaca > 0)
+          <span style="
+              position: absolute;
+              top: -5px;
+              right: -5px;
+              background-color: red;
+              color: white;
+              font-size: 10px;
+              padding: 2px 6px;
+              border-radius: 999px;
+              font-weight: bold;
+          ">{{ $jumlahBelumDibaca }}</span>
+      @endif
+  </div>
+
     
 
     {{-- Jika sudah login, tampilkan nama dan profil --}}
@@ -146,7 +168,6 @@
   <button class="menu-button" onclick="toggleSubmenu(this)">Tes Kesiapan Karir</button>
   <div class="submenu">
     <button class="menu-button" onclick="location.href='{{ route('tests.index')}}'">Daftar Tes</button>
-    <button class="menu-button" onclick="location.href='{{ route('test.result')}}'">Hasil Tes</button>
         <button class="menu-button" onclick="location.href='{{ route('test.history')}}'">Riwayat Tes</button>
   </div>
 

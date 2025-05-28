@@ -3,7 +3,7 @@
 @section('content')
 <style>
     body {
-        background: linear-gradient(to bottom, #E8EBF4, #ffffff);
+        background: #efefef;
         font-family: 'Poppins', sans-serif;
         margin: 0;
         padding: 0;
@@ -19,7 +19,7 @@
     .forum-title {
         font-size: 36px;
         font-weight: bold;
-        color: #2A2E5B;
+        color: #274c77;
         text-shadow: 1px 1px 2px #aaa;
         margin-bottom: 30px;
     }
@@ -42,7 +42,7 @@
     }
 
     .btn-post {
-        background-color: #3751FE;
+        background-color: #6096ba;
         color: white;
         padding: 10px 25px;
         border: none;
@@ -51,10 +51,11 @@
         cursor: pointer;
         margin: 20px 0;
         transition: background-color 0.3s;
+        text-decoration: none;
     }
 
     .btn-post:hover {
-        background-color: #2a3fd0;
+        background-color: #30668a;
     }
 
     .posts-grid {
@@ -65,7 +66,7 @@
     }
 
     .post-card {
-        background-color: #D5E1FF;
+        background-color: #ffffff;
         padding: 25px;
         border-radius: 25px;
         box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
@@ -114,7 +115,7 @@
         @foreach ($posts as $post)
             <a href="{{ route('forum.show', $post->id) }}" class="post-card">
                 <div class="post-title">{{ $post->title }}</div>
-                <div class="post-summary">{{ Str::limit($post->summary, 100) }}</div>
+                <div class="post-summary">{{ Str::limit($post->content, 100) }}</div>
                 <div class="post-date">{{ $post->created_at->format('d/m/y') }}</div>
                 <div class="icons">
                     <i class="fa-regular fa-comment"></i>

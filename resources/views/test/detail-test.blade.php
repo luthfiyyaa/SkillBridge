@@ -5,74 +5,84 @@
 <style>
     #detail-test-page {
         font-family: 'Poppins', sans-serif;
-        background-color: #eef3f9;
-        padding: 30px;
+        background-color: #efefef;
+        padding: 40px 20px;
+        display: flex;
+        justify-content: center;
     }
 
-    #detail-test-page h1 {
+    .detail-container {
+        background: white;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-width: 700px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .detail-container h1 {
         font-size: 34px;
-        margin-bottom: 10px;
+        margin-bottom: 16px;
         color: #0d47a1;
     }
 
-    #detail-test-page p {
+    .detail-container p {
         font-size: 18px;
-        margin: 10px 0;
+        margin: 12px 0;
         color: #333;
     }
 
-    #detail-test-page img {
-        display: block;
-        margin: 20px 0;
+    .detail-container img {
+        margin: 20px auto;
         max-width: 100%;
         height: auto;
         border-radius: 10px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
-    #detail-test-page a.kembali-link {
-        color: #6a1b9a;
-        font-weight: bold;
-        text-decoration: underline;
-        margin-bottom: 20px;
-        display: inline-block;
-    }
-
-    #detail-test-page .btn-mulai-tes {
-        display: inline-block;
-        background-color: #43a047;
+    .btn-mulai-tes {
+        background-color: #6096ba;
         color: white;
         padding: 12px 24px;
         border-radius: 10px;
         text-decoration: none;
         font-weight: bold;
+        display: inline-block;
         transition: background-color 0.3s ease;
+        margin-top: 30px;
     }
 
-    #detail-test-page .btn-mulai-tes:hover {
-        background-color: #388e3c;
+    .btn-mulai-tes:hover {
+        background-color: #8bc2e7;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: flex-end;
     }
 </style>
 
 @section('content')
 <div id="detail-test-page">
-    <h1>{{ $test->title }}</h1>
+    <div class="detail-container">
+        <h1>{{ $test->title }}</h1>
 
-    <p><strong>Bidang:</strong> {{ $test->bidang }}</p>
+        <p><strong>Bidang:</strong> {{ $test->bidang }}</p>
 
-    <img 
-        src="{{ asset('storage/' . $test->image) }}" 
-        alt="Ilustrasi Tes" 
-        width="300"
-    />
+        <img 
+            src="{{ asset('storage/' . $test->image) }}" 
+            alt="Ilustrasi Tes" 
+        />
 
-    <p>{{ $test->description }}</p>
+        <p>{{ $test->description }}</p>
 
-    <a href="{{ route('tests.index') }}" class="kembali-link">← Kembali</a>
-
-    {{-- Tombol Mulai Tes --}}
-    <div style="margin-top: 20px;">
-        <a href="{{ url('/soal-test?test_id=' . $test->id) }}" class="btn-mulai-tes">Mulai Tes</a>
+        {{-- Tombol Mulai Tes --}}
+        <div class="button-container">
+            <a href="{{ url('/soal-test?test_id=' . $test->id) }}" class="btn-mulai-tes">
+                Mulai Tes
+            </a>
+        </div>
     </div>
 </div>
 @endsection

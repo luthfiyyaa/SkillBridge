@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notifikasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class JobController extends Controller
+class NotifikasiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $notifikasi = Notifikasi::where('user_id', Auth::id())->latest()->get();
+        return view('dashboard.notifikasi', compact('notifikasi'));
     }
 
     /**
@@ -20,6 +23,15 @@ class JobController extends Controller
     public function create()
     {
         //
+    }
+
+    public function tandaiSudahDibaca($id)
+    {
+        $notif = Notifikasi::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        $notif->is_read = true;
+        $notif->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -33,7 +45,7 @@ class JobController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Notifikasi $notifikasi)
     {
         //
     }
@@ -41,7 +53,7 @@ class JobController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Notifikasi $notifikasi)
     {
         //
     }
@@ -49,7 +61,7 @@ class JobController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Notifikasi $notifikasi)
     {
         //
     }
@@ -57,7 +69,7 @@ class JobController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Notifikasi $notifikasi)
     {
         //
     }

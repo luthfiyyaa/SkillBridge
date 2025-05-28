@@ -3,13 +3,12 @@
 @section('content')
 <style>
         body { 
-            background: #f0f4fa; 
-            margin: 0; 
-            padding: 20px; 
+            background: #efefef; 
         }
-        .container { 
+        .riw-container { 
             max-width: 900px; 
             margin: auto; 
+            margin-top: 70px;
             background: white; 
             border-radius: 10px; 
             padding: 30px; 
@@ -17,7 +16,7 @@
         }
         h2 { 
             text-align: center; 
-            color: #2b3a67; 
+            color: #274c77; 
         }
         table { 
             width: 100%; 
@@ -42,13 +41,13 @@
             background-color: #4caf50; 
         }
         .Proses { 
-            background-color: #2196f3; 
+            background-color: #6096ba; 
         }
         .Ditolak { 
             background-color: #f44336; 
         }
         .btn-email { 
-            background-color: #3f51b5; 
+            background-color: #6096ba; 
             color: white; 
             border: none; 
             padding: 6px 12px; 
@@ -56,12 +55,12 @@
             cursor: pointer; 
         }
         .btn-email:hover { 
-            background-color: #303f9f; 
+            background-color: #336180; 
         }
         
     </style>
 
-    <div class="container">
+    <div class="riw-container">
         <h2>Riwayat Lamaran Kerja Anda</h2>
 
         <table>

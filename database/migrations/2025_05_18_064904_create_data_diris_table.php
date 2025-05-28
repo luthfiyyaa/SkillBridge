@@ -14,6 +14,7 @@ return new class extends Migration
         // database/migrations/xxxx_xx_xx_create_data_diris_table.php
         Schema::create('data_diris', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('nama');
             $table->string('username');
             $table->string('email');

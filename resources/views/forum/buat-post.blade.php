@@ -3,8 +3,8 @@
 @section('content')
 <style>
     body {
-        background-color: #f3f8ff;
-        font-family: Arial, sans-serif;
+        background-color: #efefef;
+        font-family: Poppins, sans-serif;
     }
 
     .container {
@@ -18,10 +18,11 @@
         font-size: 2rem;
         font-weight: bold;
         margin-bottom: 1.5rem;
+        color: #274c77;
     }
 
     .form-box {
-        background-color: #cfe0ff;
+        background-color: #ffffff;
         padding: 2rem;
         border-radius: 1rem;
         display: flex;
@@ -36,14 +37,14 @@
         width: 100%;
         max-width: 600px;
         padding: 0.75rem;
-        border: 1px solid #ccc;
+        border: 1px solid #6096ba;
         border-radius: 0.5rem;
         font-size: 1rem;
     }
 
     button[type="submit"] {
         margin-top: 1.5rem;
-        background-color: #2563eb;
+        background-color: #6096ba;
         color: white;
         padding: 0.75rem 2rem;
         border: none;
@@ -54,7 +55,7 @@
     }
 
     button[type="submit"]:hover {
-        background-color: #1d4ed8;
+        background-color: #2a5572;
     }
 </style>
 

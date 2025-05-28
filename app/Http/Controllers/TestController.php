@@ -8,6 +8,8 @@ use App\Models\Question;
 use App\Models\Test;
 use App\Models\TestResult;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Notifikasi;
 
 class TestController extends Controller
 {
@@ -136,6 +138,12 @@ class TestController extends Controller
             'user_id' => $userId,
             'test_id' => $testId,
             'score' => $score,
+        ]);
+
+        Notifikasi::create([
+            'user_id' => Auth::id(),
+            'judul' => 'Nilai Tersimpan',
+            'pesan' => 'Tes selesai! Sampai jumpa di tes selanjutnya',
         ]);
 
         return redirect()->route('test.result')->with('success', 'Tes selesai! Skor kamu: ' . $score);

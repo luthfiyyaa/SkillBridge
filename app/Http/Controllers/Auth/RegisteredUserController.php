@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Models\Notifikasi;
 
 class RegisteredUserController extends Controller
 {
@@ -45,6 +46,14 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        Notifikasi::create([
+            'user_id' => Auth::id(),
+            'judul' => 'Halo!',
+            'pesan' => 'Selamat datang di SkillBridge',
+        ]);
+
         return redirect(route('home'));
+
+        
     }
 }

@@ -10,6 +10,7 @@ class DataDiri extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'nama',
         'username',
         'email',
@@ -18,5 +19,11 @@ class DataDiri extends Model
         'no_hp',
         'institusi',
         'bidang_minat',
+        'foto',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

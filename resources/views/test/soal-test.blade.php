@@ -3,12 +3,21 @@
 @section('title', 'Soal Tes')
 
 <style>
+    html, body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
     #soal-test-page {
         font-family: 'Poppins', sans-serif;
-        background-color: #f9fbfc;
+        background-color: #efefef;
         padding: 30px;
         display: flex;
         gap: 40px;
+        min-width: 100vh; /* 🔧 Bikin penuh tinggi layar */
+        box-sizing: border-box;
+        justify-content: center;
     }
 
     #soal-test-page h1 {
@@ -29,7 +38,7 @@
         padding: 25px;
         border-radius: 10px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        max-width: 600px;
+        width: 100px;
         flex: 1;
     }
 
@@ -139,50 +148,45 @@
 
             @php
                 $options = [
-                'a' => $currentQuestion->option_a,
-                'b' => $currentQuestion->option_b,
-                'c' => $currentQuestion->option_c,
-                'd' => $currentQuestion->option_d,
+                    'a' => $currentQuestion->option_a,
+                    'b' => $currentQuestion->option_b,
+                    'c' => $currentQuestion->option_c,
+                    'd' => $currentQuestion->option_d,
                 ];
-                
-            $userAnswer = \App\Models\UserAnswer::where('user_id', auth()->id())
-                ->where('question_id', $currentQuestion->id)
-                ->first();
-            @endphp
 
-            @php
                 $existingAnswer = \App\Models\UserAnswer::where('user_id', auth()->id())
                     ->where('question_id', $currentQuestion->id)
                     ->first();
+
                 $selected = $existingAnswer->selected_answer ?? null;
             @endphp
 
-            @if ($currentQuestion->option_a)
-                <label><input type="radio" name="selected_answer" value="a" {{ $selected === 'a' ? 'checked' : '' }} required> A. {{ $currentQuestion->option_a }}</label>
-            @endif
-            @if ($currentQuestion->option_b)
-                <label><input type="radio" name="selected_answer" value="b" {{ $selected === 'b' ? 'checked' : '' }} required> B. {{ $currentQuestion->option_b }}</label>
-            @endif
-            @if ($currentQuestion->option_c)
-                <label><input type="radio" name="selected_answer" value="c" {{ $selected === 'c' ? 'checked' : '' }} required> C. {{ $currentQuestion->option_c }}</label>
-            @endif
-            @if ($currentQuestion->option_d)
-                <label><input type="radio" name="selected_answer" value="d" {{ $selected === 'd' ? 'checked' : '' }} required> D. {{ $currentQuestion->option_d }}</label>
-            @endif
-
+            {{-- Tampilkan semua opsi, dan hanya centang jika sudah pernah jawab --}}
+            @foreach($options as $key => $value)
+                @if ($value)
+                    <label>
+                        <input 
+                            type="radio" 
+                            name="selected_answer" 
+                            value="{{ $key }}"
+                            {{ $selected === $key ? 'checked' : '' }}
+                            required
+                        > {{ strtoupper($key) }}. {{ $value }}
+                    </label>
+                @endif
+            @endforeach
 
             <button type="submit" class="btn-primary">Simpan Jawaban</button>
         </form>
 
+        {{-- Navigasi soal --}}
         <div style="margin-top: 20px; display: flex; gap: 10px;"> 
             @if ($questionNumber > 1) 
-                <a href="{{ route('test.question', ['test_id' => $testId, 'number' => $questionNumber - 1]) }}" 
-                    class="nav-button">Previous</a> 
+                <a href="{{ route('test.question', ['test_id' => $testId, 'number' => $questionNumber - 1]) }}" class="nav-button">Previous</a> 
             @endif
 
             @if ($questionNumber < $totalQuestions)
-                <a href="{{ route('test.question', ['test_id' => $testId, 'number' => $questionNumber + 1]) }}"
-                class="nav-button">Next</a>
+                <a href="{{ route('test.question', ['test_id' => $testId, 'number' => $questionNumber + 1]) }}" class="nav-button">Next</a>
             @else
                 <form method="POST" action="{{ route('test.submit') }}"> 
                     @csrf 
@@ -190,8 +194,7 @@
                     <button type="submit" class="btn-primary" style="background-color: #dc3545;">Finish</button> 
                 </form>
             @endif
-</div>
-
+        </div>
     </div>
 
     {{-- Kanan: Overview --}}
@@ -209,21 +212,32 @@
                 Soal {{ $i }}
             </a>
         @endfor
-
     </div>
 </div>
 
-{{-- Timer --}}
+{{-- Timer Global --}}
 <script>
-    let seconds = 300; // 5 menit
+    // 🔧 Simpan waktu di sessionStorage agar tetap konsisten di tiap soal
+    const totalDuration = 20 * 60; // 5 menit
     const timerEl = document.getElementById("timer");
+
+    if (!sessionStorage.getItem("remainingTime")) {
+        sessionStorage.setItem("remainingTime", totalDuration);
+    }
+
+    let seconds = parseInt(sessionStorage.getItem("remainingTime"));
 
     const timer = setInterval(() => {
         let min = Math.floor(seconds / 60);
         let sec = seconds % 60;
         timerEl.textContent = `Sisa waktu: ${min}:${sec < 10 ? '0' + sec : sec}`;
-        if (--seconds < 0) {
+        
+        seconds--;
+        sessionStorage.setItem("remainingTime", seconds);
+
+        if (seconds < 0) {
             clearInterval(timer);
+            sessionStorage.removeItem("remainingTime");
             alert("Waktu habis!");
             window.location.href = "{{ route('test.result', ['test_id' => $testId]) }}";
         }

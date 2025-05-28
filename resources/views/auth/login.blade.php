@@ -46,7 +46,7 @@
             border-radius: 8px;
             border: none;
             font-size: 20px;
-            background-color: #99c0da;
+            border: 2px solid #99c0da;
         }
 
         .remember-me {

@@ -7,6 +7,7 @@ use App\Models\Mentor;
 use App\Models\MentoringRequest;
 use App\Models\Jadwal; // jika ada model jadwal
 use Illuminate\Support\Facades\Auth;
+use App\Models\Notifikasi;
 
 class MentoringRequestController extends Controller
 {
@@ -41,6 +42,12 @@ class MentoringRequestController extends Controller
             'status' => 'menunggu',
             'mentor_id' => $request->mentor_id,
             'kontak' => 'contoh' 
+        ]);
+
+        Notifikasi::create([
+            'user_id' => Auth::id(),
+            'judul' => 'Request Mentoring',
+            'pesan' => 'Permintaan sesi berhasil dikirim!',
         ]);
 
         return redirect()->route('jadwal.index')->with('success', 'Permintaan berhasil dikirim!');

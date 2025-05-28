@@ -6,64 +6,79 @@
 <style>
     #result-page {
         font-family: 'Poppins', sans-serif;
-        background-color: #f3f6fb;
-        padding: 30px;
-        margin-top: 80px; /* beri jarak dari navbar */
+        background-color: #efefef;
+        height: 800px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
-    #result-page h1 {
-        font-size: 36px;
+    .result-container {
+        background-color: white;
+        border-radius: 12px;
+        padding: 40px;
+        max-width: 600px;
+        width: 100%;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .result-container h1 {
+        font-size: 32px;
         color: #333;
         margin-bottom: 20px;
     }
 
-    #result-page p {
+    .result-container p {
         font-size: 20px;
         color: #444;
         margin-bottom: 30px;
     }
 
-    #result-page strong {
+    .result-container strong {
         color: #2e7d32;
     }
 
-    #result-page a {
+    .result-container a {
         display: inline-block;
-        padding: 10px 20px;
-        background-color: #6a1b9a;
+        padding: 12px 24px;
+        background-color: #6096ba;
         color: white;
+        font-weight: 500;
         text-decoration: none;
-        border-radius: 6px;
+        border-radius: 8px;
         transition: background-color 0.3s ease;
     }
 
-    #result-page a:hover {
-        background-color: #4a148c;
+    .result-container a:hover {
+        background-color: #94caed;
     }
 </style>
 
 <div id="result-page">
-    <h1>Hasil Tes</h1>
+    <div class="result-container">
+        <h1>Hasil Tes</h1>
 
-    @php
-        use App\Models\UserAnswer;
-        use App\Models\Question;
+        @php
+            use App\Models\UserAnswer;
+            use App\Models\Question;
 
-        $answers = UserAnswer::where('user_id', auth()->id())
-            ->where('test_id', request('test_id'))
-            ->get();
+            $answers = UserAnswer::where('user_id', auth()->id())
+                ->where('test_id', request('test_id'))
+                ->get();
 
-        $score = 0;
-        foreach ($answers as $ans) {
-            if ($ans->selected_answer === $ans->question->correct_answer) {
-                $score++;
+            $score = 0;
+            foreach ($answers as $ans) {
+                if ($ans->selected_answer === $ans->question->correct_answer) {
+                    $score++;
+                }
             }
-        }
 
-        $total = $answers->count();
-    @endphp
+            $total = $answers->count();
+        @endphp
 
-    <p>Jawaban Benar: <strong>{{ $score }}</strong> dari <strong>{{ $total }}</strong> soal</p>
-    <a href="{{ route('tests.index') }}">← Kembali ke Kategori Tes</a>
+        <p>Jawaban Benar: <strong>{{ $score }}</strong> dari <strong>{{ $total }}</strong> soal</p>
+        <a href="{{ route('tests.index') }}">← Kembali ke Kategori Tes</a>
+    </div>
 </div>
 @endsection

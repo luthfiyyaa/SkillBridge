@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Jadwal;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Notifikasi;
 
 class JadwalController extends Controller
 {
@@ -27,6 +29,12 @@ public function index()
         }
 
         $jadwal->save();
+
+        Notifikasi::create([
+            'user_id' => Auth::id(),
+            'judul' => 'Status Jadwal',
+            'pesan' => 'Status sesi berhasil diperbarui',
+        ]);
 
         return redirect()->route('jadwal.index')->with('success', 'Status sesi diperbarui.');
     }

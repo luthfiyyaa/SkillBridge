@@ -3,7 +3,7 @@
 
 <style>
     body {
-        background: #EDF2FA;
+        background: #efefef;
         font-family: 'Poppins', sans-serif;
     }
     .header {
@@ -16,9 +16,9 @@
 
     .profile-container {
         max-width: 900px;
-        margin: 40px auto;
+        margin: 80px auto;
         padding: 20px;
-        background-color: #e6ecf5;
+        background-color: #ffffff;
         border-radius: 20px;
         font-family: 'Segoe UI', sans-serif;
     }
@@ -26,7 +26,7 @@
     .profile-container h1 {
         text-align: center;
         font-size: 36px;
-        color: #3b5edb;
+        color: #274c77;
         margin-bottom: 30px;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
     }
@@ -35,6 +35,7 @@
         display: flex;
         gap: 40px;
         align-items: flex-start;
+        padding-bottom: 30px;
     }
 
     .profile-image img {

@@ -9,13 +9,13 @@
     <title>Postingan Forum</title>
     <style>
         body {
-            background: #f0f4ff;
+            background: #efefef;
             margin: 0;
             
         }
 
         .container {
-            max-width: 700px;
+            width: 700px;
             margin: 0 auto;
         }
 
@@ -24,12 +24,12 @@
             font-size: 28px;
             font-weight: bold;
             margin-bottom: 20px;
-            color: #2a3d7c;
+            color: #274c77;
             margin-top: 50px;
         }
 
         .post-box {
-            background: #dbeafe;
+            background: #ffffff;
             padding: 20px;
             border-radius: 20px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -64,7 +64,7 @@
         }
 
         .komentar-section {
-            background: #dbeafe;
+            background: #ffffff;
             padding: 20px;
             border-radius: 20px;
             margin-top: 30px;
@@ -81,10 +81,27 @@
             border-radius: 10px;
             margin-bottom: 10px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
+        .komentar-isi {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .komentar-tanggal {
+            font-size: 0.875rem;
+            color: #888;
+            white-space: nowrap;
+        }
+
+
         textarea {
-            width: 100%;
+            width: 630px;
             padding: 10px;
             border-radius: 10px;
             border: 1px solid #ccc;
@@ -94,17 +111,17 @@
 
         .submit-btn {
             margin-top: 10px;
-            background: #3b82f6;
+            background: #6096ba;
             color: white;
             padding: 10px 20px;
-            border: none;
+            border: #6096ba;
             border-radius: 10px;
             font-weight: bold;
             cursor: pointer;
         }
 
         .submit-btn:hover {
-            background: #2563eb;
+            background: #234c67;
         }
     </style>
 </head>
@@ -125,15 +142,20 @@
         <div class="komentar-section">
             <h4>Komentar</h4>
 
-            @foreach($komentar as $k)
-                <div class="komentar-item">{{ $k->isi }}</div>
-            @endforeach
-
             <form action="{{ route('forum.kirimKomentar', $post->id) }}" method="POST">
                 @csrf
                 <textarea name="isi" rows="3" placeholder="Tulis komentar..."></textarea>
                 <button type="submit" class="submit-btn">Kirim Komentar</button>
             </form>
+        </div>
+
+        <div class="komentar-section">
+            @foreach($komentar as $k)
+                <div class="komentar-item">
+                    <span class="komentar-isi">{{ $k->isi }}</span>
+                    <span class="komentar-tanggal">{{ $k->created_at->format('d/m/y') }}</span>
+                </div>
+            @endforeach
         </div>
     </div>
 </body>

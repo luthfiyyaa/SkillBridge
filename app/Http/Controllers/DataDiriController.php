@@ -4,12 +4,19 @@
 namespace App\Http\Controllers;
 use App\Models\DataDiri;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Notifikasi;
 use Illuminate\Http\Request;
+
 
 class DataDiriController extends Controller
 {
     public function showForm()
     {
+        $existing = DataDiri::where('user_id', Auth::id())->first();
+        if ($existing) {
+            return redirect()->route('profil');
+        }
+
         return view('dashboard.datadiri');
     }
 
@@ -27,9 +34,11 @@ class DataDiriController extends Controller
             'foto' => 'nullable|image|max:2048',
         ]);
 
-        // if ($request->hasFile('foto')) {
-        //     ['foto'] = $request->file('foto')->store('foto-profil', 'public');
-        // }
+        if ($request->hasFile('foto')) {
+            $path = $request->file('foto')->store('foto-profil', 'public');
+        } else {
+            $path = null;
+        }
 
         DataDiri::create([
             'user_id' => Auth::id(),
@@ -41,7 +50,13 @@ class DataDiriController extends Controller
             'no_hp' => $request->no_hp,
             'institusi' => $request->institusi,
             'bidang_minat' => $request->bidang_minat,
-            'foto' => $request->foto,
+            'foto' => $path,
+        ]);
+
+        Notifikasi::create([
+            'user_id' => Auth::id(),
+            'judul' => 'Data Diri Tersimpan',
+            'pesan' => 'Data diri kamu berhasil disimpan.',
         ]);
 
         return redirect()->route('profil')->with('success', 'Data berhasil disimpan!');
@@ -50,7 +65,6 @@ class DataDiriController extends Controller
     public function showProfile()
     {
         $profil = DataDiri::where('user_id', auth()->id())->first();
-
         if (!$profil) {
             return redirect()->route('datadiri.create')->with('warning', 'Silakan isi data diri terlebih dahulu.');
         }
@@ -58,6 +72,6 @@ class DataDiriController extends Controller
         return view('dashboard.profile', compact('profil'));
     }
 
-
+    
 
 }

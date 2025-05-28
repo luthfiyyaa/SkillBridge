@@ -4,7 +4,7 @@
 <style>
     body {
         margin: 0;
-        background: #EDF2FA;
+        background: #efefef;
         font-family: 'Poppins', sans-serif;
     }
 
@@ -19,7 +19,7 @@
         font-size: 48px;
         font-weight: 700;
         text-align: center;
-        color: #425CB8;
+        color: #274c77;
         font-family: 'Poppins', sans-serif;
         margin-bottom: 40px;
         text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -77,7 +77,7 @@
     .form-actions button {
         width: 130px;
         height: 40px;
-        background: #425CB8;
+        background: #6096ba;
         border-radius: 12px;
         color: white;
         font-size: 16px;
@@ -87,7 +87,7 @@
     }
 
     .form-actions button:hover {
-        background: #1e3a8a;
+        background: #486e88;
     }
 
     @media (max-width: 768px) {
