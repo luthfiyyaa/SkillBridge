@@ -11,12 +11,19 @@ class JadwalController extends Controller
 {
 public function index()
 {
-    $jadwals = Jadwal::orderBy('tanggal', 'desc')->get();
-        foreach ($jadwals as $jadwal) {
-            $jadwal->tanggal = \Carbon\Carbon::parse($jadwal->tanggal)->toDateString();
-        }
-        return view('mentoring.jadwal', compact('jadwals'));
+    $userId = Auth::id();
+
+    $jadwals = Jadwal::with('mentor')
+                ->where('user_id', $userId)
+                ->orderBy('tanggal', 'desc')
+                ->get();
+
+    foreach ($jadwals as $jadwal) {
+        $jadwal->tanggal = \Carbon\Carbon::parse($jadwal->tanggal)->toDateString();
     }
+
+    return view('mentoring.jadwal', compact('jadwals'));
+}
 
     public function handleAction(Request $request)
     {

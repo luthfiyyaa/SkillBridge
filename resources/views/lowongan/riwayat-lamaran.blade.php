@@ -74,7 +74,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($lamarans as $lamaran)
+                @forelse ($lamarans as $lamaran)
                     <tr>
                         <td>{{ $lamaran->lowongan->title }}</td>
                         <td>{{ $lamaran->lowongan->company }}</td>
@@ -82,7 +82,11 @@
                         <td><span class="badge {{ $lamaran->status }}">{{ $lamaran->status }}</span></td>
                         <td><a href="mailto:hr@{{ Str::slug($lamaran->lowongan->perusahaan) }}.com"><button class="btn-email">Kirim Email</button></a></td>
                     </tr>
-                @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="5">Belum ada riwayat lamaran.</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
 

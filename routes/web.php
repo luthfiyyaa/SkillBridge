@@ -79,13 +79,15 @@ Route::post('/review-mentoring', [RiwayatController::class, 'store'])->name('rev
 Route::get('/daftar-test', [CategoryTestController::class, 'index'])->name('tests.index'); 
 Route::get('/detail-test/{id}', [CategoryTestController::class, 'show'])->name('tests.show');
 
-Route::get('/soal-test', [TestController::class, 'showTestForm'])->name('test.soal');
-Route::get('/soal-test', [TestController::class, 'showQuestion'])->name('test.question');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/tes/start', [TestController::class, 'start'])->name('tes.start');
+    Route::get('/tes', [TestController::class, 'show'])->name('tes.show');
+    Route::post('/tes/answer', [TestController::class, 'answer'])->name('tes.answer');
+    Route::post('/tes/submit', [TestController::class, 'submit'])->name('tes.submit');
 
-Route::post('/save-answer', [TestController::class, 'saveAnswer'])->name('test.save');
-Route::get('/hasil-test', [TestController::class, 'showResult'])->name('test.result');
-Route::get('/riwayat-test', [TestController::class, 'history'])->name('test.history');
-Route::post('/submit-test', [TestController::class, 'submitTest'])->name('test.submit');
+    Route::get('/hasil-test', [TestController::class, 'hasil'])->name('hasil-test');
+    Route::get('/riwayat-test', [TestController::class, 'riwayat'])->name('riwayat-test');
+});
 
 Route::get('/forum', [ForumController::class, 'index'])->name('forum');
 Route::get('/buat-post', [ForumController::class, 'create'])->name('forum.create');

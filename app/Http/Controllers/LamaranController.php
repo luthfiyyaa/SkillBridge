@@ -16,7 +16,7 @@ class LamaranController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Lamaran::with('lowongan');
+        $query = Lamaran::with('lowongan')->where('user_id', Auth::id());
 
         // Filter berdasarkan status jika di-request
         if ($request->has('status') && $request->status !== 'Semua') {
@@ -73,6 +73,7 @@ class LamaranController extends Controller
         'alasan' => $request->alasan,
         'file_portofolio' => $filePath,
         'lowongan_id' => $request->lowongan_id,
+        'user_id' => Auth::id(),
         'status' => 'Proses'
     ]);
 

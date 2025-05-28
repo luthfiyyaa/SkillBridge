@@ -37,6 +37,7 @@ class MentoringRequestController extends Controller
 
         // Simpan ke tabel jadwal
         Jadwal::create([
+            'user_id' => Auth::id(),
             'tanggal' => $request->tanggal, // Gunakan sekarang jika belum ada input tanggal
             'topik' => $request->pesan,
             'status' => 'menunggu',

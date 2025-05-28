@@ -9,6 +9,7 @@
         margin-top: 2rem;
         margin-bottom: 1rem;
         font-family: 'Poppins', sans-serif;
+        color: #274c77;
     }
 
     .filter-section {
@@ -97,21 +98,6 @@
 </style>
 
 <div class="page-title">Daftar Mentor</div>
-
-<div class="filter-section">
-    <input type="text" placeholder="Cari Mentor">
-    <select name="bidang">
-        <option value="">Filter Bidang</option>
-        <option value="UI/UX">UI/UX</option>
-        <option value="Backend">Backend</option>
-    </select>
-    <select name="ketersediaan">
-        <option value="">Filter Ketersediaan</option>
-        <option value="tersedia">Tersedia</option>
-        <option value="tidak">Tidak Tersedia</option>
-    </select>
-    <button>Terapkan</button>
-</div>
 
 <div class="mentor-container">
     @foreach($mentors as $mentor)

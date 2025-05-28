@@ -168,7 +168,7 @@
   <button class="menu-button" onclick="toggleSubmenu(this)">Tes Kesiapan Karir</button>
   <div class="submenu">
     <button class="menu-button" onclick="location.href='{{ route('tests.index')}}'">Daftar Tes</button>
-        <button class="menu-button" onclick="location.href='{{ route('test.history')}}'">Riwayat Tes</button>
+        <button class="menu-button" onclick="location.href='{{ route('riwayat-test')}}'">Riwayat Tes</button>
   </div>
 
   <button class="menu-button" onclick="toggleSubmenu(this)">Mentoring</button>

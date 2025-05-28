@@ -13,151 +13,133 @@ use App\Models\Notifikasi;
 
 class TestController extends Controller
 {
-    public function showTestForm(Request $request)
+    public function start()
     {
-        $testId = $request->query('test_id');
-        $questionNumber = $request->query('q', 1);
+        session()->forget(['current_question', 'answers']); // reset sesi
+        session(['current_question' => 0, 'answers' => []]);
 
-        $test = Test::findOrFail($testId);
-        $questions = Question::where('test_id', $testId)->get();
-
-        $currentQuestion = $questions->slice($questionNumber - 1, 1)->first();
-        $totalQuestions = $questions->count();
-
-        return view('test.soal-test', compact('test', 'currentQuestion', 'questionNumber', 'totalQuestions', 'testId'));
+        return redirect()->route('tes.show');
     }
 
-    public function saveAnswer(Request $request)
+    public function show()
+    {
+        $index = session('current_question', 0);
+        $testId = 1;
+
+        $questions = Question::where('test_id', $testId)->orderBy('id')->get();
+        $total = $questions->count();
+
+        if ($index >= $total) {
+            return redirect()->route('tes.submit');
+        }
+
+        $question = $questions[$index];
+
+        return view('test.soal-test', [
+            'question' => $question,
+            'index' => $index,
+            'lastQuestion' => ($index == $total - 1),
+        ]);
+    }
+
+
+    public function answer(Request $request)
     {
         $request->validate([
             'question_id' => 'required|exists:questions,id',
-            'selected_answer' => 'required|in:a,b,c,d',
-            'test_id' => 'required|exists:tests,id',
+            'answer' => 'required|in:a,b,c,d',
+            'index' => 'required|integer',
+            'action' => 'required|string'
         ]);
 
-        UserAnswer::updateOrCreate(
-            [
-                'user_id' => auth()->id(),
-                'question_id' => $request->question_id,
-            ],
-            [
-                'test_id' => $request->test_id,
-                'selected_answer' => $request->selected_answer,
-            ]
-        );
+        $answers = session('answers', []);
+        $answers[$request->question_id] = $request->answer;
+        session(['answers' => $answers]);
 
-        // Pagination
-        $nextQuestion = $request->question_number + 1;
-        if ($nextQuestion > $request->total_questions) {
-            return redirect()->route('test.result', ['test_id' => $request->test_id]);
+        $index = $request->index;
+
+        if ($request->action === 'next') {
+            $index++;
+        } elseif ($request->action === 'prev') {
+            $index--;
+        } elseif ($request->action === 'finish') {
+            return redirect()->route('tes.submit');
         }
 
-        return redirect()->route('test.question', [
-            'test_id' => $request->test_id,
-            'q' => $nextQuestion
-        ]);
-    }
-
-    public function showQuestion(Request $request)
-    {
-        $testId = $request->query('test_id');
-        $questionNumber = (int) $request->query('number', 1);
-
-        $test = Test::findOrFail($testId);
-        $questions = $test->questions()->get();
-        $totalQuestions = $questions->count();
-
-        if ($questionNumber < 1 || $questionNumber > $totalQuestions) {
-            return redirect()->back()->with('error', 'Nomor soal tidak valid.');
-        }
-
-        $currentQuestion = $questions[$questionNumber - 1];
-
-        $existingAnswer = UserAnswer::where('user_id', auth()->id())
-            ->where('question_id', $currentQuestion->id)
-            ->first();
-
-        $answeredQuestions = UserAnswer::where('user_id', auth()->id())
-            ->where('test_id', $testId)
-            ->pluck('question_id')
-            ->toArray();
-
-        return view('test.soal-test', compact(
-            'test',
-            'testId',
-            'currentQuestion',
-            'questionNumber',
-            'totalQuestions',
-            'existingAnswer',
-            'answeredQuestions'
-        ));
+        session(['current_question' => $index]);
+        return redirect()->route('tes.show');
     }
 
 
-    // app/Http/Controllers/TestController.php
-    public function showResult()
+    public function submit()
     {
-        // Ambil data hasil tes dari database atau session
-        $user = auth()->user();
-
-        $results = DB::table('user_answers')
-            ->join('questions', 'user_answers.question_id', '=', 'questions.id')
-            ->where('user_answers.user_id', $user->id)
-            ->select('questions.question_text', 'user_answers.selected_answer')
-            ->get();
-
-        return view('test.hasil-test', compact('results'));
-    }
-
-    public function submitTest(Request $request)
-    {
-        $userId = auth()->id();
-        $testId = $request->input('test_id');
-
-        $answers = UserAnswer::where('user_id', $userId)
-                    ->where('test_id', $testId)
-                    ->get();
-
+        $user = Auth::user();
+        $answers = session('answers', []);
         $correct = 0;
 
-        foreach ($answers as $answer) {
-            $question = Question::find($answer->question_id);
-            if (
-                $question &&
-                trim(strtolower($question->correct_answer)) === trim(strtolower($answer->selected_answer))) 
-                {
-                $correct++;
-            }
-
+        if (empty($answers)) {
+            session()->forget(['current_question', 'answers']);
+            return redirect()->route('tes.show')->with('error', 'Tidak ada jawaban yang dikirim.');
         }
 
-        $total = $answers->count();
-        $score = $total > 0 ? round(($correct / $total) * 100) : 0;
+        foreach ($answers as $questionId => $selected) {
+            $question = Question::find($questionId);
+            if (!$question) continue;
+
+            $isCorrect = $question->correct_answer === $selected;
+
+            UserAnswer::create([
+                'user_id' => $user->id,
+                'test_id' => $question->test_id,
+                'question_id' => $question->id,
+                'selected_answer' => $selected,
+                'is_correct' => $isCorrect,
+            ]);
+
+            if ($isCorrect) $correct++;
+        }
+
+        $firstQuestion = Question::find(array_key_first($answers));
+        if (!$firstQuestion) {
+            session()->forget(['current_question', 'answers']);
+            return redirect()->route('tes.show')->with('error', 'Soal tidak ditemukan.');
+        }
+
+        $testId = $firstQuestion->test_id;
+        $totalQuestions = Question::where('test_id', $testId)->count();
 
         TestResult::create([
-            'user_id' => $userId,
+            'user_id' => $user->id,
             'test_id' => $testId,
-            'score' => $score,
+            'total_questions' => $totalQuestions,
+            'correct_answers' => $correct,
+            'score' => ($correct / $totalQuestions) * 100,
         ]);
 
         Notifikasi::create([
-            'user_id' => Auth::id(),
-            'judul' => 'Nilai Tersimpan',
-            'pesan' => 'Tes selesai! Sampai jumpa di tes selanjutnya',
+            'user_id' => $user->id,
+            'judul' => 'Tes Selesai.',
+            'pesan' => 'Tes berhasil diselesaikan.',
         ]);
 
-        return redirect()->route('test.result')->with('success', 'Tes selesai! Skor kamu: ' . $score);
+        // Penting: hapus semua session terkait
+        session()->forget(['current_question', 'answers']);
+
+        return redirect()->route('hasil-test')->with('success', 'Tes berhasil diselesaikan.');
     }
 
-    public function history()
+
+    public function hasil()
     {
-        $results = TestResult::with('test')
-                    ->where('user_id', auth()->id())
-                    ->latest()
-                    ->get();
-
-        return view('test.riwayat-test', compact('results'));
+        $user = Auth::user();
+        $answers = UserAnswer::with('question.test')->where('user_id', $user->id)->get();
+        return view('test.hasil-test', compact('answers'));
     }
 
-
+    public function riwayat()
+    {
+        $user = Auth::user();
+        $riwayat = UserAnswer::where('user_id', $user->id)->with('test')->get();
+        return view('test.riwayat-test', compact('riwayat'));
+    }
 }

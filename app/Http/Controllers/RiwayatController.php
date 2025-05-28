@@ -11,8 +11,15 @@ class RiwayatController extends Controller
 {
     public function index()
 {
-    // Ambil seluruh jadwal yang punya feedback
-    $feedbacks = RiwayatMentoring::with('jadwal')->latest()->get();
+    $userId = Auth::id();
+
+    // Ambil riwayat mentoring milik user yang sedang login
+    $feedbacks = RiwayatMentoring::with('jadwal')
+        ->where('user_id', $userId)
+        ->latest()
+        ->get();
+
+    // Ambil jadwal yang bisa dipilih user ini (misalnya berdasarkan jadwal yang dia ikuti)
     $jadwals = Jadwal::latest()->get();
 
     return view('mentoring.review', compact('feedbacks', 'jadwals'));
@@ -28,6 +35,7 @@ class RiwayatController extends Controller
 
     RiwayatMentoring::create([
         'jadwal_id' => $request->jadwal_id,
+        'user_id' => Auth::id(),
         'rating' => $request->rating,
         'komentar' => $request->komentar
     ]);

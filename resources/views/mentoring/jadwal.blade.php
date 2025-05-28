@@ -95,7 +95,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($jadwals as $jadwal)
+                    @forelse($jadwals as $jadwal)
                         <tr>
                             <td><input type="radio" name="selected_jadwal" value="{{ $jadwal->id }}"></td>
                             <td>{{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d M Y') }}</td>
@@ -103,9 +103,22 @@
                             <td class="{{ $jadwal->status == 'Dibatalkan' ? 'text-red' : '' }}">
                                 {{ $jadwal->status }}
                             </td>
-                            <td>{{ $jadwal->kontak }}</td>
+                            <td>
+                                @if ($jadwal->mentor && $jadwal->mentor->kontak)
+                                    <a href="https://wa.me/{{ $jadwal->mentor->kontak }}" target="_blank">
+                                        {{ $jadwal->mentor->kontak }}
+                                    </a>
+                                @else
+                                    Tidak tersedia
+                                @endif
+                            </td>
+
                         </tr>
-                    @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="5">Belum ada jadwal.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
 

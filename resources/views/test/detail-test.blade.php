@@ -79,7 +79,7 @@
 
         {{-- Tombol Mulai Tes --}}
         <div class="button-container">
-            <a href="{{ url('/soal-test?test_id=' . $test->id) }}" class="btn-mulai-tes">
+            <a href="{{ route('tes.start', ['test_id' => $test->id]) }}" class="btn-mulai-tes">
                 Mulai Tes
             </a>
         </div>
