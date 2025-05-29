@@ -10,12 +10,12 @@
 
     .profile-container {
         max-width: 900px;
-        height: 750px;
         margin: 40px auto;
         background-color: #ffffff;
         border-radius: 20px;
         padding: 2.5rem;
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
     }
 
     .section-box {
@@ -115,37 +115,43 @@
 <div class="profile-container">
     <h1 class="title">Portofolio</h1>
 
-    <div class="section-box">
-        <p><strong>Nama Lengkap:</strong> {{ $porto->nama }}</p>
-        <p><strong>Email:</strong> {{ $porto->email }}</p>
-        <p><strong>Nomor Telepon:</strong> {{ $porto->telepon }}</p>
-        <p><strong>Bidang Keahlian:</strong> {{ $porto->bidang }}</p>
-        <p><strong>LinkedIn:</strong> <a href="{{ $porto->linkedin }}" target="_blank">{{ $porto->linkedin }}</a></p>
-    </div>
-
-    <div class="section-box">
-        <h3>Deskripsi</h3>
-        <p>{{ $porto->deskripsi }}</p>
-    </div>
-
-    <div class="download-container">
-        <div class="download-box">
-            <strong>CV Terbaru</strong>
-            <p>{{ basename($porto->cv) }}</p>
-            <a href="{{ asset('storage/' . $porto->cv) }}" target="_blank">Lihat</a>
+     @if($porto)
+        <div class="section-box">
+            <p><strong>Nama Lengkap:</strong> {{ $porto->nama }}</p>
+            <p><strong>Email:</strong> {{ $porto->email }}</p>
+            <p><strong>Nomor Telepon:</strong> {{ $porto->telepon }}</p>
+            <p><strong>Bidang Keahlian:</strong> {{ $porto->bidang }}</p>
+            <p><strong>LinkedIn:</strong> <a href="{{ $porto->linkedin }}" target="_blank">{{ $porto->linkedin }}</a></p>
         </div>
-        <div class="download-box">
-            <strong>Sertifikasi</strong>
-            <p>{{ basename($porto->sertifikat) }}</p>
-            <a href="{{ asset('storage/' . $porto->sertifikat) }}" target="_blank">Lihat</a>
-        </div>
-        <div class="download-box">
-            <strong>Portofolio</strong>
-            <p>{{ basename($porto->porto) }}</p>
-            <a href="{{ asset('storage/' . $porto->porto) }}" target="_blank">Lihat</a>
-        </div>
-    </div>
 
-    <a href="/edit-porto" class="edit-btn">Edit Portofolio</a>
+        <div class="section-box">
+            <h3>Deskripsi</h3>
+            <p>{{ $porto->deskripsi }}</p>
+        </div>
+
+        <div class="download-container">
+            <div class="download-box">
+                <strong>CV Terbaru</strong>
+                <p>{{ basename($porto->cv) }}</p>
+                <a href="{{ asset('storage/' . $porto->cv) }}" target="_blank">Lihat</a>
+            </div>
+            <div class="download-box">
+                <strong>Sertifikasi</strong>
+                <p>{{ basename($porto->sertifikat) }}</p>
+                <a href="{{ asset('storage/' . $porto->sertifikat) }}" target="_blank">Lihat</a>
+            </div>
+            <div class="download-box">
+                <strong>Portofolio</strong>
+                <p>{{ basename($porto->porto) }}</p>
+                <a href="{{ asset('storage/' . $porto->porto) }}" target="_blank">Lihat</a>
+            </div>
+        </div>
+    @else
+        <div class="section-box" style="text-align: center; padding: 2rem; color: #666;">
+            <h3>Belum ada data portofolio</h3>
+            <p>Silakan lengkapi informasi portofolio Anda terlebih dahulu.</p>
+        </div>
+    @endif
+    <a href="{{ route('porto.edit') }}" class="edit-btn">Edit Portofolio</a>
 </div>
 @endsection

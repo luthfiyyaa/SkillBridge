@@ -105,7 +105,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/edit-porto', [PortofolioController::class, 'edit'])->name('porto.edit');
-Route::post('/edit-porto', [PortofolioController::class, 'update'])->name('porto.update');
+Route::post('/edit-porto', [PortofolioController::class, 'store'])->name('porto.update');
 Route::get('/portofolio', [PortofolioController::class, 'show'])->name('porto.show');
 
 Route::middleware(['auth'])->group(function () {
