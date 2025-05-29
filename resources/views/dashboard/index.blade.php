@@ -205,7 +205,7 @@
 <div class="hero">
     <h1>Selamat Datang!</h1>
     @auth
-        <p>Halo!, {{ Auth::user()->name }}</p>
+        <p>Halo, {{ Auth::user()->name }}!!</p>
     @endauth
     <h2>Jembatan Antara Keterampilan dan Karir</h2>
     <div class="hero-buttons">

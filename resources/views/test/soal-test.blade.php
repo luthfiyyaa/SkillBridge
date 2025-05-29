@@ -5,7 +5,7 @@
     <style>
         body {
             font-family: sans-serif;
-            background: linear-gradient(to bottom right, #e0e7ff, #f3f4f6);
+            background: #efefef;
             margin: 0;
             padding: 0;
         }
@@ -20,7 +20,7 @@
         }
 
         h1 {
-            color: #1e3a8a;
+            color: #274c77;
         }
 
         .question-box {
@@ -45,7 +45,7 @@
             display: block;
             margin: 8px 0;
             padding: 10px;
-            background: #e2e8f0;
+            background: #b8e3ff;
             border-radius: 8px;
             cursor: pointer;
         }
@@ -57,7 +57,7 @@
         }
 
         button {
-            background-color: #1e3a8a;
+            background-color: #6096ba;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -66,7 +66,7 @@
         }
 
         button:disabled {
-            background-color: #94a3b8;
+            background-color: #375f79;
             cursor: not-allowed;
         }
     </style>
