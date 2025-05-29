@@ -7,7 +7,7 @@
     #result-page {
         font-family: 'Poppins', sans-serif;
         background-color: #efefef;
-        height: 800px;
+        height: 500px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -16,7 +16,7 @@
     .result-container {
         background-color: white;
         border-radius: 12px;
-        padding: 40px;
+        padding: 30px;
         max-width: 600px;
         width: 100%;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -60,24 +60,12 @@
         <h1>Hasil Tes</h1>
 
         @php
-            use App\Models\UserAnswer;
-            use App\Models\Question;
-
-            $answers = UserAnswer::where('user_id', auth()->id())
-                ->where('test_id', request('test_id'))
-                ->get();
-
-            $score = 0;
-            foreach ($answers as $ans) {
-                if ($ans->selected_answer === $ans->question->correct_answer) {
-                    $score++;
-                }
-            }
-
-            $total = $answers->count();
+            $scoreColor = $result->score >= 70 ? 'green' : 'red';
         @endphp
 
-        <p>Jawaban Benar: <strong>{{ $score }}</strong> dari <strong>{{ $total }}</strong> soal</p>
+        <p>Skor: <strong style="color: {{ $scoreColor }}">{{ number_format($result->score, 2) }}</strong></p>
+
+
         <a href="{{ route('tests.index') }}">← Kembali ke Kategori Tes</a>
     </div>
 </div>

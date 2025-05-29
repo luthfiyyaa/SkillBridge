@@ -83,9 +83,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tes/start', [TestController::class, 'start'])->name('tes.start');
     Route::get('/tes', [TestController::class, 'show'])->name('tes.show');
     Route::post('/tes/answer', [TestController::class, 'answer'])->name('tes.answer');
-    Route::post('/tes/submit', [TestController::class, 'submit'])->name('tes.submit');
+    Route::match(['get', 'post'], '/tes/submit', [TestController::class, 'submit'])->name('tes.submit');
 
-    Route::get('/hasil-test', [TestController::class, 'hasil'])->name('hasil-test');
+    Route::get('/hasil-test/{test_id}', [TestController::class, 'hasil'])->name('hasil-test');
     Route::get('/riwayat-test', [TestController::class, 'riwayat'])->name('riwayat-test');
 });
 
@@ -96,11 +96,13 @@ Route::post('/buat-post', [ForumController::class, 'store'])->name('forum.store'
 Route::get('/postingan/{id}', [ForumController::class, 'show'])->name('forum.show');
 Route::post('/postingan/{id}', [ForumController::class, 'kirimKomentar'])->name('forum.kirimKomentar');
 
-Route::get('/rekom-lowongan', [LowonganController::class, 'index'])->name('rekom.lowongan');
-Route::get('/detail-lowongan/{id}', [LowonganController::class, 'show'])->name('detail.lowongan');
-Route::get('/apply-lamaran/{id}', [LamaranController::class, 'create'])->name('lamaran.create');
-Route::post('/apply-lamaran', [LamaranController::class, 'store'])->name('lamaran.store');
-Route::get('/riwayat-lamaran', [LamaranController::class, 'index'])->name('lamaran.index');
+Route::middleware('auth')->group(function () {
+    Route::get('/rekom-lowongan', [LowonganController::class, 'index'])->name('rekom.lowongan');
+    Route::get('/detail-lowongan/{id}', [LowonganController::class, 'show'])->name('detail.lowongan');
+    Route::get('/apply-lamaran/{id}', [LamaranController::class, 'create'])->name('lamaran.create');
+    Route::post('/apply-lamaran', [LamaranController::class, 'store'])->name('lamaran.store');
+    Route::get('/riwayat-lamaran', [LamaranController::class, 'index'])->name('lamaran.index');
+});
 
 Route::get('/edit-porto', [PortofolioController::class, 'edit'])->name('porto.edit');
 Route::post('/edit-porto', [PortofolioController::class, 'update'])->name('porto.update');

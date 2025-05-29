@@ -29,16 +29,18 @@ class TestController extends Controller
         $questions = Question::where('test_id', $testId)->orderBy('id')->get();
         $total = $questions->count();
 
+        // Cegah error jika index out of bound
         if ($index >= $total) {
             return redirect()->route('tes.submit');
         }
 
+        $lastQuestion = $index == $total - 1;
         $question = $questions[$index];
 
         return view('test.soal-test', [
             'question' => $question,
             'index' => $index,
-            'lastQuestion' => ($index == $total - 1),
+            'lastQuestion' => $lastQuestion,
         ]);
     }
 
@@ -107,13 +109,14 @@ class TestController extends Controller
 
         $testId = $firstQuestion->test_id;
         $totalQuestions = Question::where('test_id', $testId)->count();
+        $score = round(($correct / $totalQuestions) * 100, 2);
 
         TestResult::create([
             'user_id' => $user->id,
             'test_id' => $testId,
             'total_questions' => $totalQuestions,
             'correct_answers' => $correct,
-            'score' => ($correct / $totalQuestions) * 100,
+            'score' => $score,
         ]);
 
         Notifikasi::create([
@@ -125,21 +128,47 @@ class TestController extends Controller
         // Penting: hapus semua session terkait
         session()->forget(['current_question', 'answers']);
 
-        return redirect()->route('hasil-test')->with('success', 'Tes berhasil diselesaikan.');
+        return redirect()->route('hasil-test', ['test_id' => $testId])
+            ->with('success', 'Tes berhasil diselesaikan.');
+
     }
 
 
-    public function hasil()
+    public function hasil($testId)
     {
         $user = Auth::user();
-        $answers = UserAnswer::with('question.test')->where('user_id', $user->id)->get();
-        return view('test.hasil-test', compact('answers'));
+
+        // Ambil result terbaru
+        $result = TestResult::where('user_id', $user->id)
+            ->where('test_id', $testId)
+            ->latest('created_at') // ambil yang terbaru
+            ->first();
+
+        if (!$result) {
+            return redirect()->route('tes.show')->with('error', 'Hasil tes tidak ditemukan.');
+        }
+
+        // Ambil semua jawaban user untuk test ini
+        $answers = UserAnswer::with('question')
+            ->where('user_id', $user->id)
+            ->where('test_id', $testId)
+            ->get();
+
+        return view('test.hasil-test', [
+            'result' => $result,
+            'answers' => $answers,
+        ]);
     }
 
     public function riwayat()
     {
         $user = Auth::user();
-        $riwayat = UserAnswer::where('user_id', $user->id)->with('test')->get();
-        return view('test.riwayat-test', compact('riwayat'));
+
+        $results = TestResult::with('test')
+            ->where('user_id', $user->id)
+            ->latest()
+            ->get();
+
+        return view('test.riwayat-test', compact('results'));
     }
 }

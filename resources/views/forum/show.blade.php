@@ -150,12 +150,19 @@
         </div>
 
         <div class="komentar-section">
-            @foreach($komentar as $k)
-                <div class="komentar-item">
-                    <span class="komentar-isi">{{ $k->isi }}</span>
-                    <span class="komentar-tanggal">{{ $k->created_at->format('d/m/y') }}</span>
-                </div>
-            @endforeach
+            @if ($komentar->isEmpty())
+                <p style="color: #888;">Belum ada komentar.</p>
+            @else
+                @foreach($komentar as $k)
+                    <div class="komentar-item">
+                        <div class="komentar-isi">
+                            <strong>{{ $k->user->name ?? 'Anonim' }}</strong><br>
+                            {{ $k->isi }}
+                        </div>
+                        <span class="komentar-tanggal">{{ $k->created_at->format('d/m/y') }}</span>
+                    </div>
+                @endforeach
+            @endif
         </div>
     </div>
 </body>

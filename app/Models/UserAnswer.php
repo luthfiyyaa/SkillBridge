@@ -21,4 +21,9 @@ class UserAnswer extends Model
     {
         return $this->belongsTo(Question::class);
     }
+
+    public function test()
+    {
+        return $this->belongsTo(Test::class);
+    }
 }

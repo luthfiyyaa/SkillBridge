@@ -65,7 +65,9 @@ class LamaranController extends Controller
         $filePath = $request->file('file_portofolio')->store('portofolio', 'public');
     }
 
+
     Lamaran::create([
+        'user_id' => Auth::id(),
         'nama' => $request->nama,
         'email' => $request->email,
         'telepon' => $request->telepon,
@@ -73,7 +75,6 @@ class LamaranController extends Controller
         'alasan' => $request->alasan,
         'file_portofolio' => $filePath,
         'lowongan_id' => $request->lowongan_id,
-        'user_id' => Auth::id(),
         'status' => 'Proses'
     ]);
 

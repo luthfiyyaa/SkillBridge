@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('lamarans', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('nama');
             $table->string('email');
             $table->string('telepon');

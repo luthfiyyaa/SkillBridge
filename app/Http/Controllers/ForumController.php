@@ -57,7 +57,11 @@ class ForumController extends Controller
     public function show($id)
     {
         $post = ForumPost::findOrFail($id);
-        $komentar = Komentar::where('post_id', $id)->latest()->get();
+        $komentar = Komentar::where('post_id', $id)
+            ->with('user') // untuk memanggil nama user
+            ->latest()
+            ->get();
+
 
         return view('forum.show', compact('post', 'komentar'));
     }
@@ -71,6 +75,7 @@ class ForumController extends Controller
         Komentar::create([
             'post_id' => $id,
             'isi' => $request->isi,
+            'user_id' => Auth::id(),
         ]);
 
         Notifikasi::create([

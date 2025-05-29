@@ -3,27 +3,32 @@
 @section('content')
     <style>
         body { 
-            background: #f0f4fa; 
-            margin: 0; 
-            padding: 20px; 
+            background: #efefef; 
+            margin: 0;
+            padding: 0;
         }
-        .container { 
-            max-width: 800px; 
-            margin: auto; 
+
+        .a-container { 
+            max-width: 900px;   /* Dibuat agak lebih lebar */
+            margin: 50px auto;  /* Tengah secara horizontal dan ada ruang vertikal */
             background: white; 
-            border-radius: 10px; 
-            padding: 30px; 
-            box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+            border-radius: 12px; 
+            padding: 40px; 
+            box-shadow: 0 0 15px rgba(0,0,0,0.1); 
+            height: 750px;
         }
+
         h2 { 
             text-align: center; 
             color: #2b3a67; 
         }
+
         label { 
             display: block;
             margin-top: 15px; 
             font-weight: bold; 
         }
+
         input[type=text], input[type=email], input[type=number], textarea, select {
             width: 100%; 
             padding: 10px; 
@@ -31,12 +36,14 @@
             border: 1px solid #ccc; 
             border-radius: 8px;
         }
+
         textarea { 
             height: 120px; 
         }
+
         .btn {
             margin-top: 20px; 
-            padding: 10px 20px; 
+            padding: 12px 24px; 
             background: #3f51b5; 
             color: white; 
             border: none;
@@ -44,12 +51,25 @@
             cursor: pointer; 
             float: right;
         }
+
         .btn:hover { 
             background: #303f9f; 
         }
+
+        @media (max-width: 768px) {
+            .a-container {
+                padding: 20px;
+                margin: 20px;
+            }
+
+            .btn {
+                float: none;
+                width: 100%;
+            }
+        }
     </style>
 
-    <div class="container">
+    <div class="a-container">
         <h2>Apply Lamaran</h2>
 
         <form action="{{ route('lamaran.store') }}" method="POST" enctype="multipart/form-data">
