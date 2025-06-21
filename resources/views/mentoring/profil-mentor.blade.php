@@ -1,4 +1,5 @@
-@extends('layouts.app') {{-- Sesuaikan dengan layout utama --}}
+@extends('layouts.app')
+
 @section('content')
 
 <style>
@@ -6,6 +7,7 @@
         background: #efefef;
         font-family: 'Poppins', sans-serif;
     }
+
     .header {
         width: 100%;
         height: 117px;
@@ -33,22 +35,11 @@
 
     .profile-card {
         display: flex;
-        gap: 40px;
-        align-items: flex-start;
-        padding-bottom: 30px;
-    }
-
-    .profile-image img {
-        width: 180px;
-        height: 180px;
-        border-radius: 10px;
-        object-fit: cover;
-        background-color: #ccc;
-        border: 2px solid #aaa;
+        flex-direction: column;
+        gap: 20px;
     }
 
     .profile-details {
-        flex: 1;
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -70,15 +61,27 @@
         color: #000;
     }
 
-</style>
+    .btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        background-color: #6096ba;
+        color: white;
+        font-weight: bold;
+        transition: background 0.3s;
+        align-self: flex-end;
+    }
 
+    .btn:hover {
+        background-color: #4a7ba5;
+    }
+</style>
 
 <div class="profile-container">
     <h1>Profil Mentor</h1>
     <div class="profile-card">
-        <div class="profile-image">
-            <img src="{{ asset('storage/' . $mentor->foto) }}" alt="Foto Profil">
-        </div>
         <div class="profile-details">
             <div class="detail-row">
                 <span>Nama Lengkap</span>
@@ -94,16 +97,19 @@
             </div>
             <div class="detail-row">
                 <span>Rating</span>
-                @php $full = floor($mentor->rating); @endphp
+                <strong>
+                    @php $full = floor($mentor->rating); @endphp
                     @for($i = 0; $i < $full; $i++)
                         ★
                     @endfor
                     @if($mentor->rating > $full)
                         ☆
                     @endif
-            </div>
+                </strong>
             </div>
         </div>
+
+        <a href="{{ route('mentoring.request', $mentor->id) }}" class="btn">Ajukan Mentoring</a>
     </div>
 </div>
 

@@ -16,7 +16,7 @@
 
     .profile-container {
         max-width: 900px;
-        height: 550px;
+        height: 600px;
         margin: 40px auto;
         padding: 20px;
         background-color: #ffffff;
@@ -111,6 +111,9 @@
             <div class="detail-row">
                 <span>Bidang Minat</span>
                 <strong>{{ $profil->bidang_minat }}</strong>
+            </div>
+            <div class="form-actions" style="margin-top: 30px; text-align: right;">
+                <a href="{{ route('datadiri.edit') }}" class="btn-edit" style="padding: 10px 20px; background-color: #274c77; color: white; border-radius: 8px; text-decoration: none;">Edit</a>
             </div>
         </div>
     </div>

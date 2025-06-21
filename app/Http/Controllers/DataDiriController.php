@@ -35,10 +35,17 @@ class DataDiriController extends Controller
         ]);
 
         if ($request->hasFile('foto')) {
-            $path = $request->file('foto')->store('foto-profil', 'public');
+            $file = $request->file('foto');
+            
+            if ($file->isValid()) {
+                $path = $file->store('foto-profil', 'public');
+            } else {
+                return back()->withErrors(['foto' => 'File foto tidak valid']);
+            }
         } else {
             $path = null;
         }
+
 
         DataDiri::create([
             'user_id' => Auth::id(),
@@ -72,6 +79,63 @@ class DataDiriController extends Controller
         return view('dashboard.profile', compact('profil'));
     }
 
-    
+    public function edit()
+    {
+        $profil = DataDiri::where('user_id', auth()->id())->firstOrFail();
+        return view('dashboard.datadiri-edit', compact('profil'));
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required',
+            'username' => 'required',
+            'email' => 'required|email',
+            'jenis_kelamin' => 'required',
+            'tanggal_lahir' => 'required|date',
+            'no_hp' => 'required',
+            'institusi' => 'required',
+            'bidang_minat' => 'required',
+            'foto' => 'nullable|image|max:10240',
+        ]);
+
+        $profil = DataDiri::where('user_id', auth()->id())->firstOrFail();
+
+        $data = [
+            'nama' => $request->nama,
+            'username' => $request->username,
+            'email' => $request->email,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'no_hp' => $request->no_hp,
+            'institusi' => $request->institusi,
+            'bidang_minat' => $request->bidang_minat,
+        ];
+
+       if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            
+            if ($file->isValid()) {
+                $path = $file->store('foto-profil', 'public');
+            } else {
+                return back()->withErrors(['foto' => 'File foto tidak valid']);
+            }
+        } else {
+            $path = null;
+        }
+
+
+        $profil->update($data);
+
+        Notifikasi::create([
+            'user_id' => Auth::id(),
+            'judul' => 'Data Diri Tersimpan',
+            'pesan' => 'Data berhasil diperbarui!',
+        ]);
+
+        return redirect()->route('profil')->with('success', 'Data berhasil diperbarui!');
+    }
+
+
 
 }

@@ -70,10 +70,10 @@
 
         <p><strong>Bidang:</strong> {{ $test->bidang }}</p>
 
-        <img 
+        {{-- <img 
             src="{{ asset('storage/' . $test->image) }}" 
             alt="Ilustrasi Tes" 
-        />
+        /> --}}
 
         <p>{{ $test->description }}</p>
 

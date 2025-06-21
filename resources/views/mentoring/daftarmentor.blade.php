@@ -102,7 +102,7 @@
 <div class="mentor-container">
     @foreach($mentors as $mentor)
         <div class="mentor-card">
-            <img src="{{ asset('storage/' . $mentor->foto) }}" alt="Foto {{ $mentor->nama }}">
+            
             <h3>{{ $mentor->nama }}</h3>
             <p>{{ $mentor->bidang }}</p>
 

@@ -41,6 +41,8 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 Route::middleware(['auth'])->group(function () {
     Route::get('/datadiri', [DataDiriController::class, 'showForm'])->name('datadiri.create');
     Route::post('/datadiri', [DataDiriController::class, 'submitForm'])->name('datadiri.store');
+    Route::get('/datadiri/edit', [DataDiriController::class, 'edit'])->name('datadiri.edit');
+    Route::post('/datadiri/update', [DataDiriController::class, 'update'])->name('datadiri.update');
     Route::get('/profil', [DataDiriController::class, 'showProfile'])->name('profil');
 });
 
